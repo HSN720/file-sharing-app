@@ -1307,11 +1307,15 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
   .hiw-track { height:470vh; }
   .hiw-device { height:min(44vh,360px); top:29%; transform:translate(-50%,-50%) !important; }
   .hiw-stagewrap.center-step .hiw-device { top:25%; height:min(40vh,310px); }
-  .hiw-step { top:auto; bottom:4%; left:50% !important; right:auto !important; max-width:92% !important; text-align:center !important; transform:translateX(-50%) translateY(18px); }
+  .hiw-step { top:auto; bottom:58px; left:50% !important; right:auto !important; max-width:92% !important; text-align:center !important; transform:translateX(-50%) translateY(18px); }
   .hiw-step.on { transform:translateX(-50%); }
   .hiw-step h3 { font-size:1.5rem; margin:10px 0 10px; }
   .hiw-step p { font-size:.96rem; line-height:1.45; }
   .hiw-tab { padding:11px 22px; }
+  /* compact, still-visible dots on phones so the text clears them */
+  .hiw-dots { bottom:13px; padding:10px 15px; gap:9px; }
+  .hiw-dots i { width:9px; height:9px; }
+  .hiw-dots i.on { width:28px; }
 }
 @media (max-width: 480px) {
   /* shrink the pinned tabs so Send Files / Receiver / WebShare all fit in one row */
@@ -1325,10 +1329,13 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 .hiw-track.wifi { height:760vh; }
 .hiw-device { opacity:0; transition:transform 1s var(--ease), opacity .55s var(--ease), height .7s var(--ease), top .7s var(--ease); }
 .hiw-device.on { opacity:1; }
-/* centered steps (phone above, text below): lift + shrink the phone so the text always has room
-   — sized to fit the shorter pinned area (nav + sticky tabs) without overlapping the text */
-.hiw-stagewrap.center-step .hiw-device { top:24%; height:min(36vh,390px); }
-.hiw-stagewrap.center-step .hiw-step[data-side="center"] { bottom:3%; }
+/* centered steps: a BIG phone in the upper area with STEP + text sitting right below it
+   (top-anchored to the phone, not the bottom) so the text never hides behind the dots pill. */
+.hiw-stagewrap.center-step .hiw-device { top:28%; height:min(44vh,440px); }
+.hiw-stagewrap.center-step .hiw-step[data-side="center"] {
+  top: calc(28% + min(22vh,220px) + 14px); bottom:auto; max-width:500px; }
+.hiw-stagewrap.center-step .hiw-step[data-side="center"] h3 { font-size:clamp(1.5rem,2.2vw,2rem); margin:7px 0 9px; line-height:1.1; }
+.hiw-stagewrap.center-step .hiw-step[data-side="center"] p { font-size:.95rem; line-height:1.4; }
 
 .hiw-altdev { position:absolute; left:50%; top:50%; opacity:0; transform:translate(-50%,-50%) translateX(var(--px,0px)); transition:transform 1s var(--ease), opacity .55s var(--ease); will-change:transform,opacity; }
 .hiw-altdev.on { opacity:1; }
@@ -1338,8 +1345,8 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 /* ===== Receiver walkthrough: dual-phone (both devices) steps ===== */
 .hiw-track.receiver { height:640vh; }
 .hiw-track.hotspot { height:840vh; }
-.hiw-altdev.dual { display:flex; align-items:flex-end; justify-content:center; gap:28px; width:auto; height:auto; top:24%; }
-.hiw-altdev.dual .dual-phone { width:min(27vw,16vh,200px); text-align:center; }
+.hiw-altdev.dual { display:flex; align-items:flex-end; justify-content:center; gap:28px; width:auto; height:auto; top:30%; }
+.hiw-altdev.dual .dual-phone { width:min(27vw,15vh,180px); text-align:center; }
 .hiw-altdev.dual .dev-frame { width:100%; height:auto; }
 .hiw-altdev.dual .dev-screen { height:auto; aspect-ratio:1080/2340; }
 .hiw-altdev.dual .dev-screen img { object-fit:cover; object-position:top center; }
@@ -1350,7 +1357,7 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
   .hiw-altdev.dual small { font-size:.66rem; margin-top:9px; }
   /* centered steps on mobile: lift + shrink phone so the long description fits below */
   .hiw-stagewrap.center-step .hiw-device { top:24%; height:min(38vh,300px); }
-  .hiw-stagewrap.center-step .hiw-step[data-side="center"] { bottom:4%; }
+  .hiw-stagewrap.center-step .hiw-step[data-side="center"] { top:auto; bottom:58px; }
 }
 
 /* iPhone frame */
