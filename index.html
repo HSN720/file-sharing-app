@@ -1236,10 +1236,14 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 /* ==========================================================================
    ====  HOW IT WORKS — premium scroll walkthrough  ====
    ========================================================================== */
-.hiw { background:#fff; padding:96px 0 0; }
-.hiw .section-head { margin-bottom:32px; }
-.hiw-tabwrap { display:flex; justify-content:center; }
-.hiw-tabs { display:inline-flex; gap:6px; padding:6px; background:var(--mist); border:1px solid var(--line); border-radius:var(--r-pill); }
+.hiw { background:#fff; padding:96px 0 0; --hiw-tabs-h:78px; }
+.hiw .section-head { margin-bottom:28px; }
+/* tab bar stays pinned (below the nav) while you scroll through the walkthrough */
+.hiw-tabwrap { position:sticky; top:var(--nav-h); z-index:6; height:var(--hiw-tabs-h);
+  display:flex; align-items:center; justify-content:center; padding:0 16px;
+  background:rgba(255,255,255,.85); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line); }
+.hiw-tabs { display:inline-flex; gap:6px; padding:6px; background:var(--mist); border:1px solid var(--line); border-radius:var(--r-pill); max-width:100%; }
 .hiw-tab { padding:12px 30px; border-radius:var(--r-pill); font-size:.96rem; font-weight:600; color:var(--slate); transition:.25s var(--ease); white-space:nowrap; }
 .hiw-tab.active { background:#fff; color:var(--ink); box-shadow:var(--sh-sm); }
 .hiw-panel { display:none; }
@@ -1247,7 +1251,7 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 
 /* scroll stage */
 .hiw-track { position:relative; height:520vh; }
-.hiw-pin { position:sticky; top:var(--nav-h); height:calc(100vh - var(--nav-h)); display:flex; align-items:center; overflow:hidden; }
+.hiw-pin { position:sticky; top:calc(var(--nav-h) + var(--hiw-tabs-h)); height:calc(100vh - var(--nav-h) - var(--hiw-tabs-h)); display:flex; align-items:center; overflow:hidden; }
 .hiw-stagewrap { position:relative; width:100%; max-width:1160px; height:100%; margin:0 auto; padding:0 28px; }
 
 /* the single device */
@@ -1270,10 +1274,14 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 .hiw-step h3 { font-size:clamp(1.7rem,2.8vw,2.4rem); margin:12px 0 14px; letter-spacing:-.03em; line-height:1.08; }
 .hiw-step p { font-size:1.06rem; color:var(--slate); line-height:1.5; }
 
-/* progress dots + hint */
-.hiw-dots { position:absolute; left:50%; bottom:20px; transform:translateX(-50%); display:flex; gap:8px; z-index:4; }
-.hiw-dots i { width:7px; height:7px; border-radius:50%; background:var(--line-strong); transition:.35s var(--ease); }
-.hiw-dots i.on { background:var(--blue); width:24px; border-radius:6px; }
+/* progress dots + hint — bigger, and a draggable pill (hold & drag to scrub steps) */
+.hiw-dots { position:absolute; left:50%; bottom:14px; transform:translateX(-50%); display:flex; align-items:center; gap:11px; z-index:4;
+  padding:11px 16px; border-radius:999px; background:rgba(255,255,255,.72); border:1px solid var(--line);
+  box-shadow:var(--sh-xs); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  cursor:grab; touch-action:none; user-select:none; -webkit-user-select:none; }
+.hiw-dots:active { cursor:grabbing; }
+.hiw-dots i { width:11px; height:11px; border-radius:50%; background:var(--line-strong); transition:width .35s var(--ease), background .35s var(--ease); pointer-events:none; }
+.hiw-dots i.on { background:var(--blue); width:34px; border-radius:7px; }
 .hiw-scrollhint { text-align:center; color:var(--slate-light); font-size:.84rem; padding:16px 28px 0; }
 
 /* WebShare */
@@ -1304,6 +1312,13 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
   .hiw-step h3 { font-size:1.5rem; margin:10px 0 10px; }
   .hiw-step p { font-size:.96rem; line-height:1.45; }
   .hiw-tab { padding:11px 22px; }
+}
+@media (max-width: 480px) {
+  /* shrink the pinned tabs so Send Files / Receiver / WebShare all fit in one row */
+  .hiw { --hiw-tabs-h:70px; }
+  .hiw-tabwrap { padding:0 8px; }
+  .hiw-tabs { gap:4px; padding:5px; max-width:100%; }
+  .hiw-tab { padding:9px 13px; font-size:.86rem; }
 }
 
 /* ===== WiFi Mode walkthrough — alt devices (laptop / iPhone) + final combined ===== */
@@ -1403,7 +1418,7 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 /* brand wordmark — OLOW (blue) + Share (teal) */
 .wm { font-weight:800; letter-spacing:-.02em; }
 .wm-o { color:#0749F4; }
-.wm-s { color:#08CDC8; }
+.wm-s { color:#08CDC8; margin-left:0.22em; }
 
 /* Play Store icon inside nav buttons */
 .pstore-ico { width:18px; height:18px; vertical-align:-3px; flex:none; }
@@ -1422,8 +1437,6 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 .shots-arrow[disabled] { opacity:0; pointer-events:none; }
 @media (max-width:640px){ .shots-arrow { display:none; } }
 
-/* clickable How-It-Works progress dots */
-.hiw-dots i { cursor:pointer; pointer-events:auto; }
 
 /* ==========================================================================
    ====  PREMIUM FEATURE BENTO — layered, mixed sizes, screenshots, drawer  ====
@@ -1689,12 +1702,13 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
           <h2>Transfer files in seconds</h2>
           <p>Transfer files in seconds with a simple and secure process.</p>
         </div>
-        <div class="hiw-tabwrap reveal">
-          <div class="hiw-tabs" role="tablist">
-            <button class="hiw-tab active" data-hiwtab="send" role="tab">Send Files</button>
-            <button class="hiw-tab" data-hiwtab="web" role="tab">WebShare</button>
-            <button class="hiw-tab" data-hiwtab="receiver" role="tab">Receiver</button>
-          </div>
+      </div>
+
+      <div class="hiw-tabwrap">
+        <div class="hiw-tabs" role="tablist">
+          <button class="hiw-tab active" data-hiwtab="send" role="tab">Send Files</button>
+          <button class="hiw-tab" data-hiwtab="receiver" role="tab">Receiver</button>
+          <button class="hiw-tab" data-hiwtab="web" role="tab">WebShare</button>
         </div>
       </div>
 
@@ -2232,17 +2246,43 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
     var alts = [].slice.call(track.querySelectorAll('.hiw-altdev'));
     var fin = track.querySelector('.hiw-final');
     var dots = [].slice.call(track.querySelectorAll('.hiw-dots i'));
-    /* click a dot to jump to that step (scroll the page to the matching position) */
-    dots.forEach(function (d, n) {
-      d.addEventListener('click', function () {
-        if (track.offsetParent === null) return;
-        var total = track.offsetHeight - window.innerHeight;
-        var rect = track.getBoundingClientRect();
-        var p = (n + 0.5) / steps.length;
-        var y = window.scrollY + rect.top + p * total;
-        window.scrollTo({ top: Math.round(y), behavior: 'smooth' });
+    var dotsWrap = track.querySelector('.hiw-dots');
+    /* Tap OR hold-and-drag across the dots to scrub through the steps. */
+    function goToStep(n, smooth) {
+      if (track.offsetParent === null) return;
+      if (n < 0) n = 0; else if (n > steps.length - 1) n = steps.length - 1;
+      var total = track.offsetHeight - window.innerHeight;
+      var rect = track.getBoundingClientRect();
+      var p = (n + 0.5) / steps.length;
+      var y = window.scrollY + rect.top + p * total;
+      window.scrollTo({ top: Math.round(y), behavior: smooth ? 'smooth' : 'auto' });
+    }
+    if (dotsWrap) {
+      var idxFromX = function (x) {
+        var best = 0, bd = Infinity;
+        dots.forEach(function (d, n) { var r = d.getBoundingClientRect(); var c = r.left + r.width / 2; var dd = Math.abs(x - c); if (dd < bd) { bd = dd; best = n; } });
+        return best;
+      };
+      var pressing = false, dragging = false, startX = 0;
+      dotsWrap.addEventListener('pointerdown', function (e) {
+        pressing = true; dragging = false; startX = e.clientX;
+        if (dotsWrap.setPointerCapture) { try { dotsWrap.setPointerCapture(e.pointerId); } catch (_) {} }
+        e.preventDefault();
       });
-    });
+      dotsWrap.addEventListener('pointermove', function (e) {
+        if (!pressing) return;
+        if (!dragging && Math.abs(e.clientX - startX) > 5) dragging = true;
+        if (dragging) goToStep(idxFromX(e.clientX), false);   /* instant follow while dragging */
+      });
+      var endPress = function (e) {
+        if (!pressing) return; pressing = false;
+        var x = (e && e.clientX != null) ? e.clientX : startX;
+        goToStep(idxFromX(x), true);                          /* smooth settle on release / tap */
+        dragging = false;
+      };
+      dotsWrap.addEventListener('pointerup', endPress);
+      dotsWrap.addEventListener('pointercancel', endPress);
+    }
     var stage = track.querySelector('.hiw-stagewrap');
     var cur = -1;
     function offset() { return Math.min((stage ? stage.clientWidth : 1000) * 0.28, 380); }
