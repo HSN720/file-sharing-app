@@ -1,0 +1,12 @@
+{
+  "name": "Olow — Share Files Faster Than Ever",
+  "short_name": "Olow",
+  "description": "Send, receive, and manage files across Android and Desktop with a clean, reliable, and seamless sharing experience.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f1d3d",
+  "icons": [
+    { "src": "../public/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

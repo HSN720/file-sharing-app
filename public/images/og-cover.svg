@@ -1,0 +1,26 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f1d3d"/>
+      <stop offset="1" stop-color="#0a1530"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#18305f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g transform="translate(100, 235)">
+    <rect width="86" height="86" rx="22" fill="url(#mark)"/>
+    <path d="M22 45 L36 58 L66 28" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="208" y="305" font-family="Inter, Segoe UI, sans-serif" font-size="58" font-weight="700" fill="#fff" letter-spacing="-1">Olow</text>
+  <text x="100" y="420" font-family="Inter, Segoe UI, sans-serif" font-size="72" font-weight="800" fill="#fff" letter-spacing="-2">Share Files Faster</text>
+  <text x="100" y="500" font-family="Inter, Segoe UI, sans-serif" font-size="72" font-weight="800" fill="#8fb4ff" letter-spacing="-2">Than Ever.</text>
+  <text x="100" y="560" font-family="Inter, Segoe UI, sans-serif" font-size="28" font-weight="500" fill="#9fb0c9">Send, receive, and manage files across Android and Desktop.</text>
+</svg>
