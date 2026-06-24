@@ -1,0 +1,2525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OlowShare — Share Files Faster Than Ever</title>
+  <meta name="description" content="OlowShare lets you send, receive, and manage files across Android, Windows, Mac, and Linux with a clean, reliable, and seamless sharing experience. Download free." />
+  <meta name="theme-color" content="#0f1d3d" />
+  <meta property="og:title" content="OlowShare — Share Files Faster Than Ever" />
+  <meta property="og:description" content="Send, receive, and manage files across Android and Desktop — fast, secure, and beautifully simple." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-cover.svg" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="apple-touch-icon" href="icons/favicon.svg" />
+  <link rel="manifest" href="assets/site.webmanifest" />
+  <link rel="preload" href="assets/fonts/inter-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+  <style>
+/* ==========================================================================
+   Olow — Premium File Sharing
+   Design System & Global Styles
+   ========================================================================== */
+
+/* ----- Self-hosted Inter (no external dependencies) ----- */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/inter-400.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('assets/fonts/inter-500.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('assets/fonts/inter-600.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/inter-700.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 800; font-display: swap; src: url('assets/fonts/inter-800.woff2') format('woff2'); }
+
+/* ----- Design Tokens ----- */
+:root {
+  /* Color */
+  --white: #ffffff;
+  --paper: #fbfcfd;
+  --mist: #f4f6f9;
+  --cloud: #eceff4;
+  --line: #e3e8ef;
+  --line-strong: #d3dae5;
+
+  --charcoal: #1b1f27;
+  --ink: #11151c;
+  --navy: #0f1d3d;
+  --navy-deep: #0a1530;
+  --navy-soft: #18305f;
+
+  --slate: #5a6678;
+  --slate-light: #8a94a6;
+
+  --blue: #2563eb;
+  --blue-bright: #3b82f6;
+  --blue-deep: #1d4ed8;
+  --blue-tint: #eef3fe;
+  --blue-tint-2: #dbe6fd;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-pill: 999px;
+
+  /* Shadow */
+  --sh-xs: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --sh-sm: 0 2px 8px rgba(16, 24, 40, 0.06);
+  --sh-md: 0 12px 30px -12px rgba(16, 24, 40, 0.16);
+  --sh-lg: 0 30px 60px -22px rgba(15, 29, 61, 0.22);
+  --sh-blue: 0 16px 36px -14px rgba(37, 99, 235, 0.45);
+
+  /* Layout */
+  --maxw: 1200px;
+  --nav-h: 72px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ----- Reset ----- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--charcoal);
+  background: var(--white);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+ul { list-style: none; }
+
+::selection { background: var(--blue-tint-2); color: var(--navy); }
+
+/* ----- Typography ----- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+h1 { font-size: clamp(2.6rem, 5.4vw, 4.3rem); letter-spacing: -0.035em; }
+h2 { font-size: clamp(2rem, 3.6vw, 3rem); letter-spacing: -0.03em; }
+h3 { font-size: clamp(1.25rem, 1.8vw, 1.6rem); }
+h4 { font-size: 1.12rem; letter-spacing: -0.01em; }
+p { color: var(--slate); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.eyebrow::before {
+  content: "";
+  width: 22px; height: 1.5px;
+  background: var(--blue);
+  display: inline-block;
+}
+.eyebrow.center::before { display: none; }
+
+/* ----- Layout Utilities ----- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.section { padding: 110px 0; }
+.section-sm { padding: 72px 0; }
+.section-head { max-width: 720px; margin-bottom: 64px; }
+.section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+.section-head .eyebrow { margin-bottom: 18px; }
+.section-head p { font-size: 1.12rem; margin-top: 18px; }
+
+.bg-mist { background: var(--mist); }
+.bg-paper { background: var(--paper); }
+.bg-navy { background: var(--navy); color: #fff; }
+.bg-navy h1, .bg-navy h2, .bg-navy h3, .bg-navy h4 { color: #fff; }
+.bg-navy p { color: rgba(255,255,255,0.72); }
+
+.text-grad {
+  background: linear-gradient(100deg, var(--blue) 0%, var(--navy-soft) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ----- Buttons ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 14px 26px;
+  border-radius: var(--r-pill);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, color .2s, border-color .2s;
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+}
+.btn svg { width: 18px; height: 18px; }
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: var(--sh-blue);
+}
+.btn-primary:hover { background: var(--blue-deep); transform: translateY(-2px); box-shadow: 0 20px 44px -14px rgba(37,99,235,.55); }
+.btn-dark { background: var(--ink); color: #fff; box-shadow: var(--sh-md); }
+.btn-dark:hover { background: var(--charcoal); transform: translateY(-2px); }
+.btn-ghost {
+  background: var(--white);
+  color: var(--charcoal);
+  border-color: var(--line-strong);
+  box-shadow: var(--sh-xs);
+}
+.btn-ghost:hover { border-color: var(--slate-light); transform: translateY(-2px); box-shadow: var(--sh-sm); }
+.btn-light { background: #fff; color: var(--navy); }
+.btn-light:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -16px rgba(0,0,0,.4); }
+.btn-outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,0.28); }
+.btn-outline-light:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); transform: translateY(-2px); }
+.btn-lg { padding: 17px 32px; font-size: 1.02rem; }
+.btn-block { width: 100%; }
+
+/* Store button (with subtext) */
+.btn-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 24px 12px 22px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: #fff;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s;
+  box-shadow: var(--sh-md);
+}
+.btn-store:hover { transform: translateY(-2px); background: var(--charcoal); box-shadow: var(--sh-lg); }
+.btn-store svg { width: 26px; height: 26px; flex-shrink: 0; }
+.btn-store .store-meta { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
+.btn-store .store-meta .s1 { font-size: 0.68rem; opacity: 0.72; letter-spacing: 0.02em; }
+.btn-store .store-meta .s2 { font-size: 1.02rem; font-weight: 600; letter-spacing: -0.01em; }
+.btn-store.ghost { background: #fff; color: var(--ink); border: 1.5px solid var(--line-strong); box-shadow: var(--sh-xs); }
+.btn-store.ghost:hover { background: var(--white); border-color: var(--slate-light); }
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  transition: background .3s var(--ease-soft), box-shadow .3s var(--ease-soft), border-color .3s;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: var(--sh-xs);
+}
+.nav-inner {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 700; font-size: 1.18rem; letter-spacing: -0.02em; color: var(--ink); }
+.brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(140deg, var(--blue) 0%, var(--navy-soft) 100%);
+  display: grid; place-items: center;
+  box-shadow: var(--sh-blue);
+}
+.brand-mark svg { width: 19px; height: 19px; }
+
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--slate);
+  padding: 9px 15px;
+  border-radius: var(--r-sm);
+  transition: color .2s, background .2s;
+}
+.nav-links a:hover { color: var(--ink); background: var(--mist); }
+.nav-links a.active { color: var(--ink); font-weight: 600; }
+
+.nav-cta { display: flex; align-items: center; gap: 12px; }
+.nav-toggle { display: none; width: 42px; height: 42px; border-radius: 10px; align-items: center; justify-content: center; }
+.nav-toggle:hover { background: var(--mist); }
+.nav-toggle span { position: relative; width: 20px; height: 2px; background: var(--ink); border-radius: 2px; transition: .25s var(--ease); }
+.nav-toggle span::before, .nav-toggle span::after { content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: var(--ink); border-radius: 2px; transition: .25s var(--ease); }
+.nav-toggle span::before { top: -6px; }
+.nav-toggle span::after { top: 6px; }
+body.menu-open .nav-toggle span { background: transparent; }
+body.menu-open .nav-toggle span::before { top: 0; transform: rotate(45deg); }
+body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  inset: var(--nav-h) 0 0 0;
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  z-index: 99;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s var(--ease), transform .28s var(--ease);
+}
+body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.mobile-menu a { font-size: 1.25rem; font-weight: 600; color: var(--ink); padding: 16px 8px; border-bottom: 1px solid var(--line); letter-spacing: -0.01em; }
+.mobile-menu a:last-of-type { border-bottom: none; }
+.mobile-menu .btn { margin-top: 22px; }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  position: relative;
+  padding: calc(var(--nav-h) + 96px) 0 100px;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 60% at 82% 6%, var(--blue-tint) 0%, rgba(238,243,254,0) 60%),
+    linear-gradient(180deg, var(--paper) 0%, var(--white) 70%);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 7px 7px 7px;
+  padding-right: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--slate);
+  box-shadow: var(--sh-xs);
+  margin-bottom: 28px;
+}
+.hero-pill b { color: var(--blue); font-weight: 600; background: var(--blue-tint); padding: 3px 10px; border-radius: var(--r-pill); }
+.hero h1 { margin-bottom: 24px; }
+.hero-sub { font-size: 1.2rem; max-width: 540px; margin-bottom: 36px; color: var(--slate); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.hero-trust { margin-top: 34px; display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.hero-trust .stars { display: flex; gap: 2px; color: #f5a623; }
+.hero-trust .stars svg { width: 16px; height: 16px; }
+.hero-trust small { font-size: 0.88rem; color: var(--slate-light); }
+.hero-trust b { color: var(--charcoal); }
+
+/* App mockup */
+.mockup {
+  position: relative;
+  perspective: 1600px;
+}
+.mockup-window {
+  background: #fff;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-lg);
+  overflow: hidden;
+  transform: rotateY(-9deg) rotateX(3deg) translateZ(0);
+  transition: transform .6s var(--ease);
+}
+.mockup:hover .mockup-window { transform: rotateY(-4deg) rotateX(1.5deg); }
+.mockup-bar {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 16px;
+  background: var(--mist);
+  border-bottom: 1px solid var(--line);
+}
+.mockup-bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--line-strong); display: block; }
+.mockup-bar i:nth-child(1){ background:#ff5f57; } .mockup-bar i:nth-child(2){ background:#febc2e; } .mockup-bar i:nth-child(3){ background:#28c840; }
+.mockup-bar .url { margin-left: 14px; flex: 1; height: 22px; background: #fff; border-radius: 6px; border: 1px solid var(--line); font-size: 0.72rem; color: var(--slate-light); display: flex; align-items: center; padding: 0 12px; }
+.mockup-body { display: grid; grid-template-columns: 168px 1fr; min-height: 380px; }
+.mk-side { background: var(--paper); border-right: 1px solid var(--line); padding: 18px 14px; }
+.mk-side .mk-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; color: var(--ink); margin-bottom: 22px; }
+.mk-side .mk-logo span { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(140deg, var(--blue), var(--navy-soft)); }
+.mk-nav { display: flex; flex-direction: column; gap: 4px; }
+.mk-nav a { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 8px; font-size: 0.82rem; color: var(--slate); font-weight: 500; }
+.mk-nav a.on { background: var(--blue-tint); color: var(--blue); }
+.mk-nav a i { width: 15px; height: 15px; border-radius: 4px; background: currentColor; opacity: .5; }
+.mk-nav a.on i { opacity: 1; }
+.mk-main { padding: 20px 22px; }
+.mk-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.mk-head h5 { font-size: 1.02rem; font-weight: 700; color: var(--ink); }
+.mk-upload {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  padding: 22px;
+  text-align: center;
+  background: var(--paper);
+  margin-bottom: 18px;
+}
+.mk-upload .ico { width: 38px; height: 38px; border-radius: 10px; background: var(--blue-tint); display: grid; place-items: center; margin: 0 auto 10px; color: var(--blue); }
+.mk-upload .ico svg { width: 20px; height: 20px; }
+.mk-upload p { font-size: 0.78rem; color: var(--slate); }
+.mk-upload b { color: var(--blue); }
+.mk-files { display: flex; flex-direction: column; gap: 9px; }
+.mk-file { display: flex; align-items: center; gap: 12px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.mk-file .ft { width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; font-size: 0.6rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+.mk-file .ft.pdf { background: #e0564b; } .mk-file .ft.img { background: #3b82f6; } .mk-file .ft.zip { background: #8b6dd6; }
+.mk-file .fi { flex: 1; min-width: 0; }
+.mk-file .fi .n { font-size: 0.8rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-file .fi .bar { height: 4px; background: var(--cloud); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+.mk-file .fi .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-bright)); border-radius: 3px; }
+.mk-file .pct { font-size: 0.72rem; font-weight: 600; color: var(--slate); }
+.mk-file .pct.done { color: #28a35a; }
+
+.hero-float {
+  position: absolute;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--sh-lg);
+  border: 1px solid var(--line);
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 0.82rem;
+  animation: floaty 5s ease-in-out infinite;
+}
+.hero-float .fico { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; }
+.hero-float .fico svg { width: 18px; height: 18px; }
+.hero-float .ft { font-weight: 600; color: var(--ink); line-height: 1.25; }
+.hero-float .fs { color: var(--slate-light); font-size: 0.74rem; }
+.hero-float.f1 { top: 8%; left: -36px; }
+.hero-float.f1 .fico { background: #e7f7ee; color: #28a35a; }
+.hero-float.f2 { bottom: 10%; right: -28px; animation-delay: 1.4s; }
+.hero-float.f2 .fico { background: var(--blue-tint); color: var(--blue); }
+@keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-12px); } }
+
+/* ==========================================================================
+   Logos / Trust strip
+   ========================================================================== */
+.logos { padding: 44px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.logos p { text-align: center; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-light); margin-bottom: 26px; }
+.logos-row { display: flex; align-items: center; justify-content: center; gap: 52px; flex-wrap: wrap; opacity: .85; }
+.logos-row .logo-item { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--slate); letter-spacing: -0.02em; }
+.logos-row .logo-item svg { width: 22px; height: 22px; opacity: .8; }
+
+/* ==========================================================================
+   Feature Cards
+   ========================================================================== */
+.grid { display: grid; gap: 24px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.feature-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
+}
+.feature-card:hover { transform: translateY(-5px); box-shadow: var(--sh-md); border-color: var(--line-strong); }
+.feature-icon {
+  width: 50px; height: 50px;
+  border-radius: 13px;
+  display: grid; place-items: center;
+  background: var(--blue-tint);
+  color: var(--blue);
+  margin-bottom: 22px;
+  transition: transform .35s var(--ease);
+}
+.feature-card:hover .feature-icon { transform: scale(1.08) rotate(-3deg); }
+.feature-icon svg { width: 24px; height: 24px; }
+.feature-card h3 { font-size: 1.18rem; margin-bottom: 11px; }
+.feature-card p { font-size: 0.96rem; }
+.feature-card.dark { background: var(--navy); border-color: transparent; }
+.feature-card.dark h3 { color: #fff; }
+.feature-card.dark p { color: rgba(255,255,255,.66); }
+.feature-card.dark .feature-icon { background: rgba(255,255,255,.1); color: #8fb4ff; }
+
+/* ==========================================================================
+   App Preview / Device showcase
+   ========================================================================== */
+.showcase { position: relative; }
+.showcase-stage {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+  padding: 30px 0;
+}
+.device-desktop {
+  width: 640px;
+  max-width: 76%;
+  background: #fff;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-lg);
+  overflow: hidden;
+}
+.device-phone {
+  width: 230px;
+  background: var(--ink);
+  border-radius: 34px;
+  padding: 9px;
+  box-shadow: var(--sh-lg);
+  margin-left: -78px;
+  margin-bottom: -10px;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.device-phone .screen {
+  background: #fff;
+  border-radius: 26px;
+  overflow: hidden;
+  aspect-ratio: 9/19;
+}
+.device-phone .notch { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 78px; height: 20px; background: var(--ink); border-radius: 0 0 14px 14px; z-index: 3; }
+
+/* phone screen UI */
+.ph-top { background: linear-gradient(150deg, var(--navy) 0%, var(--navy-soft) 100%); padding: 34px 18px 22px; color: #fff; }
+.ph-top .ph-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; opacity: .8; margin-bottom: 18px; }
+.ph-top h6 { font-size: 1.15rem; color: #fff; letter-spacing: -0.02em; }
+.ph-top p { font-size: 0.72rem; color: rgba(255,255,255,.6); margin-top: 3px; }
+.ph-body { padding: 16px; }
+.ph-card { display: flex; align-items: center; gap: 11px; padding: 11px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+.ph-card .pc-ico { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+.ph-card .pc-ico svg { width: 16px; height: 16px; }
+.ph-card .pc-i .n { font-size: 0.74rem; font-weight: 600; color: var(--ink); }
+.ph-card .pc-i .s { font-size: 0.64rem; color: var(--slate-light); }
+
+/* ==========================================================================
+   Cross-platform flow
+   ========================================================================== */
+.flow-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.flow-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 28px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.flow-card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); }
+.flow-node { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
+.flow-node .fn-ico { width: 56px; height: 56px; border-radius: 15px; display: grid; place-items: center; background: var(--mist); color: var(--navy); border: 1px solid var(--line); }
+.flow-node .fn-ico svg { width: 26px; height: 26px; }
+.flow-node small { font-size: 0.74rem; font-weight: 600; color: var(--slate); }
+.flow-arrow { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--blue); position: relative; }
+.flow-arrow svg { width: 100%; height: 26px; }
+.flow-card .ft { font-size: 0.92rem; }
+.flow-card .ft b { display: block; color: var(--ink); font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+
+/* ==========================================================================
+   Use cases
+   ========================================================================== */
+.usecase-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  overflow: hidden;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.usecase-card:hover { transform: translateY(-5px); box-shadow: var(--sh-md); }
+.usecase-card .uc-ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--navy); color: #fff; margin-bottom: 20px; }
+.usecase-card .uc-ico svg { width: 22px; height: 22px; }
+.usecase-card h4 { margin-bottom: 9px; }
+.usecase-card p { font-size: 0.92rem; }
+
+/* ==========================================================================
+   Stats
+   ========================================================================== */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+.stat { text-align: center; padding: 14px; }
+.stat .num { font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 800; letter-spacing: -0.04em; color: #fff; line-height: 1; font-family: var(--font-display); }
+.stat .num .suf { color: #8fb4ff; }
+.stat .lbl { margin-top: 12px; font-size: 0.96rem; color: rgba(255,255,255,.62); font-weight: 500; }
+.bg-navy .stat .num { color: #fff; }
+
+/* ==========================================================================
+   Testimonials
+   ========================================================================== */
+.t-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.t-card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); }
+.t-stars { display: flex; gap: 3px; color: #f5a623; }
+.t-stars svg { width: 17px; height: 17px; }
+.t-card blockquote { font-size: 1.04rem; color: var(--charcoal); line-height: 1.55; letter-spacing: -0.01em; }
+.t-author { display: flex; align-items: center; gap: 13px; margin-top: auto; }
+.t-avatar { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; font-size: 1rem; flex-shrink: 0; }
+.t-author .ta-i .n { font-weight: 600; color: var(--ink); font-size: 0.96rem; }
+.t-author .ta-i .r { font-size: 0.84rem; color: var(--slate-light); }
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 4px;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.faq-q .faq-ico { width: 26px; height: 26px; flex-shrink: 0; position: relative; }
+.faq-q .faq-ico::before, .faq-q .faq-ico::after { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--blue); border-radius: 2px; transition: .3s var(--ease); }
+.faq-q .faq-ico::before { width: 14px; height: 2px; }
+.faq-q .faq-ico::after { width: 2px; height: 14px; }
+.faq-item.open .faq-q .faq-ico::after { transform: translate(-50%,-50%) rotate(90deg); opacity: 0; }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease); }
+.faq-a-inner { padding: 0 4px 26px; color: var(--slate); font-size: 1rem; max-width: 92%; }
+
+/* ==========================================================================
+   CTA band
+   ========================================================================== */
+.cta-band {
+  position: relative;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 60%, #0b1f47 100%);
+  padding: 76px 56px;
+  text-align: center;
+}
+.cta-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 80% at 50% 0%, rgba(59,130,246,.28) 0%, transparent 70%); }
+.cta-band > * { position: relative; }
+.cta-band h2 { color: #fff; margin-bottom: 18px; }
+.cta-band p { color: rgba(255,255,255,.7); font-size: 1.15rem; max-width: 560px; margin: 0 auto 34px; }
+.cta-band .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer { background: var(--ink); color: rgba(255,255,255,.6); padding: 76px 0 36px; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 52px; border-bottom: 1px solid rgba(255,255,255,.09); }
+.footer .brand { color: #fff; margin-bottom: 18px; }
+.footer-about p { font-size: 0.94rem; max-width: 320px; margin-bottom: 22px; color: rgba(255,255,255,.55); }
+.footer-social { display: flex; gap: 11px; }
+.footer-social a { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,.07); display: grid; place-items: center; color: rgba(255,255,255,.7); transition: background .2s, color .2s, transform .2s; }
+.footer-social a:hover { background: var(--blue); color: #fff; transform: translateY(-2px); }
+.footer-social svg { width: 18px; height: 18px; }
+.footer-col h5 { color: #fff; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col a { font-size: 0.94rem; color: rgba(255,255,255,.58); transition: color .2s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 30px; gap: 16px; flex-wrap: wrap; }
+.footer-bottom small { font-size: 0.86rem; color: rgba(255,255,255,.45); }
+.footer-bottom .fb-links { display: flex; gap: 24px; }
+.footer-bottom .fb-links a { font-size: 0.86rem; color: rgba(255,255,255,.5); }
+.footer-bottom .fb-links a:hover { color: #fff; }
+
+/* ==========================================================================
+   Page hero (sub-pages)
+   ========================================================================== */
+.page-hero {
+  padding: calc(var(--nav-h) + 76px) 0 64px;
+  background:
+    radial-gradient(50% 60% at 80% 0%, var(--blue-tint) 0%, rgba(238,243,254,0) 60%),
+    var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.page-hero.center { text-align: center; }
+.page-hero .container { max-width: 820px; }
+.page-hero.center .container { margin: 0 auto; }
+.page-hero h1 { font-size: clamp(2.4rem, 4.6vw, 3.6rem); margin: 20px 0; }
+.page-hero p { font-size: 1.2rem; max-width: 640px; }
+.page-hero.center p { margin: 0 auto; }
+
+/* ==========================================================================
+   Steps (How it works)
+   ========================================================================== */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--line);
+}
+.step-row:last-child { border-bottom: none; }
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.step-num b { width: 48px; height: 48px; border-radius: 13px; background: var(--navy); color: #fff; display: grid; place-items: center; font-size: 1.3rem; font-weight: 700; box-shadow: var(--sh-md); }
+.step-num span { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+.step-text h3 { font-size: 1.7rem; margin-bottom: 14px; }
+.step-text p { font-size: 1.08rem; }
+.step-text ul { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.step-text ul li { display: flex; gap: 11px; align-items: flex-start; font-size: 0.98rem; color: var(--slate); }
+.step-text ul li svg { width: 19px; height: 19px; color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+.step-visual {
+  background: linear-gradient(160deg, var(--mist), var(--white));
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 38px;
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--sh-sm);
+}
+.step-row:nth-child(even) .step-visual { order: -1; }
+
+/* ==========================================================================
+   Download page
+   ========================================================================== */
+.dl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.dl-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow .35s var(--ease), transform .35s var(--ease);
+}
+.dl-card:hover { box-shadow: var(--sh-lg); transform: translateY(-4px); }
+.dl-card.featured { background: linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%); border-color: transparent; color: #fff; }
+.dl-head { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+.dl-logo { width: 64px; height: 64px; border-radius: 17px; display: grid; place-items: center; flex-shrink: 0; }
+.dl-logo svg { width: 34px; height: 34px; }
+.dl-card .dl-logo { background: var(--mist); color: var(--navy); }
+.dl-card.featured .dl-logo { background: rgba(255,255,255,.12); color: #fff; }
+.dl-head h3 { font-size: 1.45rem; margin-bottom: 4px; }
+.dl-card.featured h3 { color: #fff; }
+.dl-head .dl-plat { font-size: 0.88rem; color: var(--slate-light); }
+.dl-card.featured .dl-plat { color: rgba(255,255,255,.6); }
+.dl-meta { display: flex; gap: 26px; padding: 20px 0; margin: 4px 0 24px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.dl-card.featured .dl-meta { border-color: rgba(255,255,255,.14); }
+.dl-meta .dm { }
+.dl-meta .dm .dl-k { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-light); margin-bottom: 4px; }
+.dl-meta .dm .dl-v { font-weight: 600; color: var(--ink); font-size: 0.96rem; }
+.dl-card.featured .dl-meta .dm .dl-v { color: #fff; }
+.dl-card.featured .dl-meta .dm .dl-k { color: rgba(255,255,255,.55); }
+.dl-feats { display: flex; flex-direction: column; gap: 13px; margin-bottom: 30px; }
+.dl-feats li { display: flex; align-items: flex-start; gap: 11px; font-size: 0.96rem; color: var(--slate); }
+.dl-card.featured .dl-feats li { color: rgba(255,255,255,.78); }
+.dl-feats li svg { width: 19px; height: 19px; color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+.dl-card.featured .dl-feats li svg { color: #8fb4ff; }
+.dl-req { margin-top: 22px; font-size: 0.84rem; color: var(--slate-light); }
+.dl-card.featured .dl-req { color: rgba(255,255,255,.5); }
+
+/* ==========================================================================
+   About / values / team
+   ========================================================================== */
+.value-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 30px; }
+.value-card .v-ico { width: 46px; height: 46px; border-radius: 12px; background: var(--blue-tint); color: var(--blue); display: grid; place-items: center; margin-bottom: 18px; }
+.value-card .v-ico svg { width: 23px; height: 23px; }
+.value-card h4 { margin-bottom: 10px; }
+.value-card p { font-size: 0.94rem; }
+
+.about-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.about-lead .al-img {
+  border-radius: var(--r-xl);
+  background: linear-gradient(160deg, var(--navy), var(--navy-deep));
+  min-height: 380px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--sh-lg);
+}
+
+.timeline { max-width: 760px; margin: 0 auto; position: relative; padding-left: 40px; }
+.timeline::before { content: ""; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.tl-item { position: relative; padding-bottom: 38px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before { content: ""; position: absolute; left: -33px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--blue); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--blue-tint-2); }
+.tl-item .tl-year { font-size: 0.84rem; font-weight: 700; color: var(--blue); letter-spacing: 0.04em; }
+.tl-item h4 { margin: 6px 0 8px; }
+.tl-item p { font-size: 0.96rem; }
+
+/* ==========================================================================
+   Contact
+   ========================================================================== */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
+.contact-info { display: flex; flex-direction: column; gap: 16px; }
+.ci-card { display: flex; gap: 16px; align-items: flex-start; padding: 22px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); transition: box-shadow .3s, transform .3s; }
+.ci-card:hover { box-shadow: var(--sh-sm); transform: translateY(-2px); }
+.ci-card .ci-ico { width: 46px; height: 46px; border-radius: 12px; background: var(--blue-tint); color: var(--blue); display: grid; place-items: center; flex-shrink: 0; }
+.ci-card .ci-ico svg { width: 22px; height: 22px; }
+.ci-card h4 { font-size: 1.02rem; margin-bottom: 4px; }
+.ci-card p { font-size: 0.92rem; }
+.ci-card a { color: var(--blue); font-weight: 500; }
+
+.form-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-xl); padding: 40px; box-shadow: var(--sh-sm); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { margin-bottom: 20px; }
+.field label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; }
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-md);
+  font-family: inherit;
+  font-size: 0.96rem;
+  color: var(--ink);
+  background: var(--paper);
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: #fff;
+  box-shadow: 0 0 0 4px var(--blue-tint);
+}
+.field textarea { resize: vertical; min-height: 130px; }
+.form-note { font-size: 0.84rem; color: var(--slate-light); margin-top: 6px; }
+.form-success {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: #e7f7ee;
+  border: 1px solid #b6e6c9;
+  border-radius: var(--r-md);
+  color: #1c7a44;
+  font-weight: 500;
+  font-size: 0.94rem;
+  margin-bottom: 22px;
+}
+.form-success.show { display: flex; }
+.form-success svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* ==========================================================================
+   Legal pages
+   ========================================================================== */
+.legal { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: start; }
+.legal-toc { position: sticky; top: calc(var(--nav-h) + 30px); }
+.legal-toc h5 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-light); margin-bottom: 16px; }
+.legal-toc ul { display: flex; flex-direction: column; gap: 3px; }
+.legal-toc a { display: block; font-size: 0.92rem; color: var(--slate); padding: 8px 12px; border-radius: 8px; border-left: 2px solid transparent; transition: .2s; }
+.legal-toc a:hover, .legal-toc a.active { color: var(--blue); background: var(--blue-tint); border-left-color: var(--blue); }
+.legal-body h2 { font-size: 1.6rem; margin: 48px 0 16px; padding-top: 12px; }
+.legal-body h2:first-child { margin-top: 0; }
+.legal-body h3 { font-size: 1.18rem; margin: 28px 0 12px; }
+.legal-body p { margin-bottom: 16px; color: var(--slate); font-size: 1rem; }
+.legal-body ul { margin: 0 0 18px 0; display: flex; flex-direction: column; gap: 10px; }
+.legal-body ul li { position: relative; padding-left: 26px; color: var(--slate); font-size: 1rem; }
+.legal-body ul li::before { content: ""; position: absolute; left: 6px; top: 11px; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+.legal-meta { display: inline-block; font-size: 0.88rem; color: var(--slate-light); padding: 8px 16px; background: var(--mist); border-radius: var(--r-pill); margin-bottom: 14px; }
+
+/* ==========================================================================
+   Pill tags / misc
+   ========================================================================== */
+.tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.tag { font-size: 0.84rem; font-weight: 500; color: var(--slate); background: #fff; border: 1px solid var(--line); padding: 7px 15px; border-radius: var(--r-pill); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.feature-list-big { display: flex; flex-direction: column; gap: 8px; }
+.flb-item { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.flb-item:last-child { border-bottom: none; }
+.flb-item .flb-ico { width: 44px; height: 44px; border-radius: 12px; background: var(--blue-tint); color: var(--blue); display: grid; place-items: center; flex-shrink: 0; }
+.flb-item .flb-ico svg { width: 22px; height: 22px; }
+.flb-item h4 { margin-bottom: 6px; }
+.flb-item p { font-size: 0.94rem; }
+
+/* ==========================================================================
+   Scroll reveal
+   ========================================================================== */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .08s; }
+.reveal.d2 { transition-delay: .16s; }
+.reveal.d3 { transition-delay: .24s; }
+.reveal.d4 { transition-delay: .32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+  .mockup-window { transform: none; }
+  .mockup:hover .mockup-window { transform: none; }
+  .hero-float.f1 { left: 0; } .hero-float.f2 { right: 0; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
+  .about-lead, .split, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .legal { grid-template-columns: 1fr; gap: 32px; }
+  .legal-toc { position: static; display: none; }
+  .step-row { gap: 40px; }
+}
+@media (max-width: 820px) {
+  .nav-links, .nav-cta .btn-desktop { display: none; }
+  .nav-toggle { display: flex; }
+  .section { padding: 76px 0; }
+  .section-head { margin-bottom: 44px; }
+  .grid-2, .grid-3, .grid-4, .flow-grid, .dl-grid, .form-row { grid-template-columns: 1fr; }
+  .step-row { grid-template-columns: 1fr; gap: 28px; padding: 44px 0; }
+  .step-row:nth-child(even) .step-visual { order: 0; }
+  .showcase-stage { flex-direction: column; align-items: center; }
+  .device-desktop { max-width: 100%; width: 100%; }
+  .device-phone { margin-left: 0; margin-top: -40px; }
+  .cta-band { padding: 56px 26px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+  .footer-about { grid-column: 1 / -1; }
+}
+@media (max-width: 540px) {
+  body { font-size: 16px; }
+  .container { padding: 0 20px; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn, .hero-actions .btn-store { width: 100%; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .cta-band .cta-actions { flex-direction: column; }
+  .cta-band .cta-actions .btn { width: 100%; }
+}
+
+/* ==========================================================================
+   ====  PREMIUM COMPONENT LIBRARY (v2)  ====
+   Shared building blocks for custom per-page layouts.
+   ========================================================================== */
+
+/* ----- Backgrounds & atmosphere ----- */
+.bg-ink { background: var(--ink); color: #fff; }
+.bg-ink h1,.bg-ink h2,.bg-ink h3,.bg-ink h4 { color:#fff; }
+.bg-ink p { color: rgba(255,255,255,.66); }
+.bg-grid-soft { position: relative; }
+.bg-grid-soft::before {
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 30%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(70% 60% at 50% 30%, #000 0%, transparent 75%);
+  opacity:.5;
+}
+.bg-grid-soft > * { position: relative; z-index: 1; }
+.mesh-hero {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(48% 50% at 12% 8%, rgba(59,130,246,.16) 0%, transparent 60%),
+    radial-gradient(42% 46% at 92% 0%, rgba(24,48,95,.12) 0%, transparent 55%),
+    linear-gradient(180deg, var(--paper) 0%, var(--white) 72%);
+}
+.mesh-ink {
+  position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #0f1d3d 0%, #0a1530 60%, #0b1f47 100%);
+  color: #fff;
+}
+.mesh-ink::before {
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(40% 60% at 85% 0%, rgba(59,130,246,.30) 0%, transparent 60%),
+    radial-gradient(45% 55% at 8% 100%, rgba(59,130,246,.16) 0%, transparent 60%);
+  pointer-events:none;
+}
+.mesh-ink > * { position: relative; }
+.mesh-ink h1,.mesh-ink h2,.mesh-ink h3,.mesh-ink h4 { color:#fff; }
+.mesh-ink p { color: rgba(255,255,255,.7); }
+
+/* dotted ink grid for dark sections */
+.dotgrid::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image: radial-gradient(rgba(255,255,255,.07) 1.2px, transparent 1.2px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent 80%);
+  mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent 80%);
+}
+
+/* ----- Eyebrow chip variant ----- */
+.chip {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 15px 7px 12px; border-radius: var(--r-pill);
+  background:#fff; border:1px solid var(--line); box-shadow: var(--sh-xs);
+  font-size:.8rem; font-weight:600; color:var(--slate); letter-spacing:.01em;
+}
+.chip .dot { width:7px; height:7px; border-radius:50%; background:var(--blue); box-shadow:0 0 0 4px var(--blue-tint); }
+.chip svg { width:15px; height:15px; color:var(--blue); }
+.chip-light { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.16); color:rgba(255,255,255,.82); }
+.chip-light .dot { box-shadow:0 0 0 4px rgba(59,130,246,.2); }
+
+/* ----- Animated headline underline accent ----- */
+.accent-underline { position:relative; display:inline-block; }
+.accent-underline::after {
+  content:""; position:absolute; left:0; right:0; bottom:.06em; height:.32em; z-index:-1;
+  background: linear-gradient(90deg, var(--blue-tint-2), var(--blue-tint));
+  border-radius:4px; transform: scaleX(0); transform-origin:left; transition: transform .8s var(--ease) .2s;
+}
+.reveal.in .accent-underline::after, .accent-underline.in::after { transform: scaleX(1); }
+
+/* ----- KPI / metric ribbon ----- */
+.kpi-ribbon { display:grid; grid-template-columns: repeat(4, 1fr); gap:0; border:1px solid var(--line); border-radius: var(--r-lg); overflow:hidden; background:#fff; box-shadow: var(--sh-sm); }
+.kpi { padding:30px 28px; border-right:1px solid var(--line); }
+.kpi:last-child { border-right:none; }
+.kpi .k-num { font-size:2rem; font-weight:800; letter-spacing:-.04em; color:var(--ink); line-height:1; font-family:var(--font-display); }
+.kpi .k-num .suf { color:var(--blue); }
+.kpi .k-lbl { margin-top:8px; font-size:.88rem; color:var(--slate); font-weight:500; }
+.kpi-ribbon.on-ink { background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.12); }
+.kpi-ribbon.on-ink .kpi { border-color:rgba(255,255,255,.1); }
+.kpi-ribbon.on-ink .k-num { color:#fff; } .kpi-ribbon.on-ink .k-num .suf { color:#8fb4ff; }
+.kpi-ribbon.on-ink .k-lbl { color:rgba(255,255,255,.6); }
+
+/* ----- Bento grid ----- */
+.bento { display:grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(150px, auto); gap:20px; }
+.bento-item {
+  position:relative; overflow:hidden;
+  background:#fff; border:1px solid var(--line); border-radius: var(--r-lg);
+  padding:30px; transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
+}
+.bento-item:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: var(--line-strong); }
+.bento-item.span-2 { grid-column: span 2; } .bento-item.span-3 { grid-column: span 3; }
+.bento-item.span-4 { grid-column: span 4; } .bento-item.span-6 { grid-column: span 6; }
+.bento-item.row-2 { grid-row: span 2; }
+.bento-item.dark { background: linear-gradient(160deg, var(--navy), var(--navy-deep)); border-color:transparent; color:#fff; }
+.bento-item.dark h3,.bento-item.dark h4 { color:#fff; } .bento-item.dark p { color:rgba(255,255,255,.66); }
+.bento-item.accent { background: linear-gradient(160deg, var(--blue), var(--blue-deep)); border-color:transparent; color:#fff; }
+.bento-item.accent h3,.bento-item.accent h4 { color:#fff; } .bento-item.accent p { color:rgba(255,255,255,.82); }
+.bento-ico { width:48px; height:48px; border-radius:13px; display:grid; place-items:center; background:var(--blue-tint); color:var(--blue); margin-bottom:18px; }
+.bento-ico svg { width:24px; height:24px; }
+.bento-item.dark .bento-ico, .bento-item.accent .bento-ico { background:rgba(255,255,255,.14); color:#fff; }
+.bento-item h3 { font-size:1.2rem; margin-bottom:9px; } .bento-item h4 { font-size:1.05rem; margin-bottom:7px; }
+.bento-item p { font-size:.95rem; }
+.bento-badge { position:absolute; top:22px; right:22px; font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); background:var(--blue-tint); padding:5px 11px; border-radius:var(--r-pill); }
+
+/* ----- Marquee (logo / testimonial scroll) ----- */
+.marquee { overflow:hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display:flex; gap:26px; width:max-content; animation: marquee 34s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-item { display:flex; align-items:center; gap:11px; font-weight:700; font-size:1.05rem; color:var(--slate); letter-spacing:-.02em; white-space:nowrap; }
+.marquee-item svg { width:22px; height:22px; opacity:.75; }
+
+/* ----- Tabs ----- */
+.tabs { }
+.tab-nav { display:inline-flex; gap:4px; padding:5px; background:var(--mist); border:1px solid var(--line); border-radius: var(--r-pill); margin:0 auto 44px; }
+.tab-nav.center { display:flex; width:max-content; }
+.tab-btn { padding:11px 22px; border-radius:var(--r-pill); font-size:.94rem; font-weight:600; color:var(--slate); transition:.25s var(--ease); white-space:nowrap; }
+.tab-btn.active { background:#fff; color:var(--ink); box-shadow: var(--sh-sm); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; animation: tabin .5s var(--ease); }
+@keyframes tabin { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform:none; } }
+
+/* ----- Comparison table ----- */
+.compare { width:100%; border-collapse:separate; border-spacing:0; background:#fff; border:1px solid var(--line); border-radius: var(--r-lg); overflow:hidden; box-shadow: var(--sh-sm); }
+.compare th, .compare td { padding:18px 22px; text-align:left; border-bottom:1px solid var(--line); font-size:.96rem; }
+.compare thead th { background:var(--paper); font-weight:600; color:var(--slate); font-size:.84rem; text-transform:uppercase; letter-spacing:.06em; }
+.compare thead th.feat-col { width:40%; }
+.compare thead th.olow { color:var(--blue); }
+.compare tbody td:first-child { font-weight:600; color:var(--ink); }
+.compare .col-olow { background:var(--blue-tint); }
+.compare tr:last-child td { border-bottom:none; }
+.compare .yes { color:#1c9a5a; display:inline-flex; }
+.compare .yes svg { width:20px; height:20px; }
+.compare .no { color:var(--slate-light); display:inline-flex; }
+.compare .no svg { width:18px; height:18px; }
+.compare-head-brand { display:inline-flex; align-items:center; gap:8px; font-weight:700; color:var(--blue); text-transform:none; letter-spacing:-.01em; font-size:1rem; }
+.compare-head-brand .m { width:22px; height:22px; border-radius:6px; background:linear-gradient(140deg,var(--blue),var(--navy-soft)); }
+
+/* ----- Spotlight (sticky media + scroll list) ----- */
+.spotlight { display:grid; grid-template-columns: 1fr 1.1fr; gap:60px; align-items:start; }
+.spotlight-sticky { position:sticky; top:calc(var(--nav-h) + 40px); }
+.spot-item { padding:30px 0; border-bottom:1px solid var(--line); }
+.spot-item:last-child { border-bottom:none; }
+.spot-item .si-k { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.spot-item .si-k b { width:34px; height:34px; border-radius:10px; background:var(--navy); color:#fff; display:grid; place-items:center; font-size:.86rem; font-weight:700; }
+.spot-item .si-k span { font-size:.78rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); }
+.spot-item h3 { font-size:1.4rem; margin-bottom:10px; }
+.spot-item p { font-size:1rem; }
+
+/* ----- Workflow connector steps ----- */
+.workflow { display:grid; grid-template-columns: repeat(4, 1fr); gap:24px; position:relative; }
+.wf-step { position:relative; background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:30px 26px; transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+.wf-step:hover { transform:translateY(-5px); box-shadow:var(--sh-md); }
+.wf-num { width:42px; height:42px; border-radius:12px; background:var(--blue-tint); color:var(--blue); display:grid; place-items:center; font-weight:800; font-size:1.05rem; margin-bottom:18px; }
+.wf-step.active .wf-num { background:var(--blue); color:#fff; box-shadow:var(--sh-blue); }
+.wf-step h4 { margin-bottom:9px; } .wf-step p { font-size:.92rem; }
+.wf-step .wf-link { position:absolute; top:50px; right:-24px; width:24px; color:var(--line-strong); z-index:2; }
+.wf-step:last-child .wf-link { display:none; }
+.wf-step .wf-link svg { width:24px; height:18px; }
+
+/* ----- Roadmap (horizontal) ----- */
+.roadmap { display:grid; grid-template-columns: repeat(4,1fr); gap:24px; position:relative; }
+.roadmap::before { content:""; position:absolute; left:0; right:0; top:34px; height:2px; background:var(--line); }
+.rm-col { position:relative; padding-top:64px; }
+.rm-col .rm-dot { position:absolute; top:24px; left:0; width:20px; height:20px; border-radius:50%; background:#fff; border:3px solid var(--blue); box-shadow:0 0 0 5px var(--blue-tint); }
+.rm-col.done .rm-dot { background:var(--blue); }
+.rm-col.next .rm-dot { border-color:var(--slate-light); box-shadow:0 0 0 5px var(--mist); }
+.rm-tag { font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); }
+.rm-col.next .rm-tag { color:var(--slate-light); }
+.rm-col h4 { margin:8px 0 10px; }
+.rm-col p { font-size:.92rem; }
+.rm-state { display:inline-block; margin-top:14px; font-size:.74rem; font-weight:600; padding:4px 11px; border-radius:var(--r-pill); background:var(--blue-tint); color:var(--blue); }
+.rm-col.next .rm-state { background:var(--mist); color:var(--slate); }
+
+/* ----- Team cards ----- */
+.team-card { text-align:center; }
+.team-photo { width:100%; aspect-ratio:1/1; border-radius:var(--r-lg); position:relative; overflow:hidden; margin-bottom:18px; display:grid; place-items:center; }
+.team-photo .initials { font-size:2.6rem; font-weight:800; color:#fff; letter-spacing:-.02em; font-family:var(--font-display); position:relative; z-index:1; }
+.team-card h4 { margin-bottom:3px; }
+.team-card .role { font-size:.9rem; color:var(--blue); font-weight:600; }
+.team-card .bio { font-size:.88rem; color:var(--slate); margin-top:10px; }
+
+/* ----- Changelog / release notes ----- */
+.changelog { display:flex; flex-direction:column; gap:0; }
+.cl-item { display:grid; grid-template-columns: 150px 1fr; gap:30px; padding:28px 0; border-bottom:1px solid var(--line); }
+.cl-item:last-child { border-bottom:none; }
+.cl-meta .cl-ver { font-weight:700; color:var(--ink); font-size:1.05rem; }
+.cl-meta .cl-date { font-size:.84rem; color:var(--slate-light); margin-top:4px; }
+.cl-tag { display:inline-block; margin-top:10px; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:4px 10px; border-radius:var(--r-pill); }
+.cl-tag.new { background:#e7f7ee; color:#1c8a4e; }
+.cl-tag.imp { background:var(--blue-tint); color:var(--blue); }
+.cl-tag.fix { background:#fdeee9; color:#c2552f; }
+.cl-body ul { display:flex; flex-direction:column; gap:9px; }
+.cl-body li { position:relative; padding-left:24px; font-size:.95rem; color:var(--slate); }
+.cl-body li::before { content:""; position:absolute; left:5px; top:9px; width:6px; height:6px; border-radius:50%; background:var(--blue); }
+
+/* ----- Setup steps (numbered list with line) ----- */
+.setup { display:flex; flex-direction:column; gap:0; max-width:680px; }
+.setup-step { display:grid; grid-template-columns:auto 1fr; gap:22px; padding-bottom:30px; position:relative; }
+.setup-step:last-child { padding-bottom:0; }
+.setup-step::before { content:""; position:absolute; left:21px; top:46px; bottom:-4px; width:2px; background:var(--line); }
+.setup-step:last-child::before { display:none; }
+.setup-step .ss-n { width:44px; height:44px; border-radius:50%; background:#fff; border:2px solid var(--line-strong); color:var(--ink); display:grid; place-items:center; font-weight:700; z-index:1; }
+.setup-step h4 { margin-bottom:6px; } .setup-step p { font-size:.94rem; }
+
+/* ----- Pill list / requirement chips ----- */
+.req-list { display:flex; flex-direction:column; gap:13px; }
+.req-list li { display:flex; align-items:center; gap:12px; font-size:.95rem; color:var(--slate); }
+.req-list li .rq-ico { width:34px; height:34px; border-radius:9px; background:var(--mist); color:var(--navy); display:grid; place-items:center; flex-shrink:0; }
+.req-list li .rq-ico svg { width:17px; height:17px; }
+.req-list.on-dark li { color:rgba(255,255,255,.78); }
+.req-list.on-dark li .rq-ico { background:rgba(255,255,255,.1); color:#fff; }
+
+/* ----- Big quote ----- */
+.bigquote { max-width:880px; margin:0 auto; text-align:center; }
+.bigquote .mark { font-size:4rem; line-height:1; color:var(--blue); font-family:var(--font-display); font-weight:800; }
+.bigquote blockquote { font-size:clamp(1.4rem,2.6vw,2rem); font-weight:600; letter-spacing:-.02em; color:var(--ink); line-height:1.35; margin:6px 0 26px; }
+.mesh-ink .bigquote blockquote { color:#fff; }
+.bigquote .bq-author { display:inline-flex; align-items:center; gap:13px; }
+
+/* ----- Section divider ----- */
+.divider-grad { height:1px; background:linear-gradient(90deg, transparent, var(--line-strong), transparent); border:none; margin:0; }
+
+/* ----- Floating UI label (reusable) ----- */
+.ui-toast { display:inline-flex; align-items:center; gap:11px; background:#fff; border:1px solid var(--line); border-radius:13px; padding:12px 15px; box-shadow:var(--sh-lg); }
+.ui-toast .ut-ico { width:34px; height:34px; border-radius:9px; display:grid; place-items:center; flex-shrink:0; }
+.ui-toast .ut-ico svg { width:18px; height:18px; }
+.ui-toast .ut-t { font-weight:600; color:var(--ink); font-size:.84rem; line-height:1.2; }
+.ui-toast .ut-s { font-size:.74rem; color:var(--slate-light); }
+
+/* ----- Glow-free gradient frame for media ----- */
+.media-frame { border-radius:var(--r-xl); border:1px solid var(--line); background:linear-gradient(160deg,var(--mist),#fff); padding:18px; box-shadow:var(--sh-lg); }
+.media-frame.dark { background:linear-gradient(160deg,#13254b,#0c1b3c); border-color:rgba(255,255,255,.1); }
+
+/* ----- Anchor offset helper ----- */
+.anchor { scroll-margin-top: calc(var(--nav-h) + 24px); }
+
+/* ----- Float animation utility ----- */
+.float-y { animation: floaty 5.5s ease-in-out infinite; }
+.float-y.delay { animation-delay: 1.6s; }
+
+/* ----- v2 responsive ----- */
+@media (max-width: 1024px) {
+  .bento { grid-template-columns: repeat(4, 1fr); }
+  .bento-item.span-3 { grid-column: span 2; } .bento-item.span-4 { grid-column: span 4; }
+  .spotlight { grid-template-columns:1fr; gap:34px; }
+  .spotlight-sticky { position:static; }
+  .workflow { grid-template-columns: repeat(2,1fr); }
+  .wf-step .wf-link { display:none; }
+  .roadmap { grid-template-columns: repeat(2,1fr); }
+  .roadmap::before { display:none; }
+  .kpi-ribbon { grid-template-columns: repeat(2,1fr); }
+  .kpi:nth-child(2) { border-right:none; }
+  .kpi:nth-child(1),.kpi:nth-child(2) { border-bottom:1px solid var(--line); }
+}
+@media (max-width: 640px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento-item, .bento-item.span-2, .bento-item.span-3, .bento-item.span-4, .bento-item.span-6 { grid-column: span 1; }
+  .bento-item.row-2 { grid-row: span 1; }
+  .workflow { grid-template-columns: 1fr; }
+  .roadmap { grid-template-columns: 1fr; }
+  .kpi-ribbon { grid-template-columns: 1fr; }
+  .kpi { border-right:none; border-bottom:1px solid var(--line); }
+  .kpi:last-child { border-bottom:none; }
+  .cl-item { grid-template-columns: 1fr; gap:14px; }
+  .tab-nav { width:100%; overflow-x:auto; justify-content:flex-start; }
+  .compare { font-size:.86rem; display:block; overflow-x:auto; white-space:nowrap; }
+}
+
+/* ==========================================================================
+   ====  ONE-PAGE ADDITIONS  ====
+   ========================================================================== */
+
+/* Nav active (scroll-spy) */
+.nav-links a.current { color: var(--ink); font-weight: 600; }
+.nav-links a.current::after { content:""; display:block; height:2px; border-radius:2px; background:var(--blue); margin-top:3px; }
+
+/* ----- Platform cards (Android / Windows / Mac / Linux) ----- */
+.platform-card {
+  position: relative;
+  background:#fff; border:1px solid var(--line); border-radius: var(--r-lg);
+  padding: 30px 26px; text-align:center;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
+}
+.platform-card:hover { transform: translateY(-5px); box-shadow: var(--sh-md); border-color: var(--line-strong); }
+.platform-ico { width:62px; height:62px; margin:0 auto 18px; border-radius:16px; display:grid; place-items:center; background:var(--mist); color:var(--navy); }
+.platform-ico svg { width:32px; height:32px; }
+.platform-card h4 { margin-bottom:6px; }
+.platform-card p { font-size:.9rem; margin-bottom:16px; }
+.platform-card .pf-status { display:inline-flex; align-items:center; gap:7px; font-size:.82rem; font-weight:600; color:var(--blue); }
+.platform-card .pf-status.soon { color: var(--slate-light); }
+.platform-card .pf-status .ic { width:16px; height:16px; }
+.platform-card.featured { background: linear-gradient(165deg, var(--navy), var(--navy-deep)); border-color:transparent; }
+.platform-card.featured h4 { color:#fff; } .platform-card.featured p { color:rgba(255,255,255,.66); }
+.platform-card.featured .platform-ico { background:rgba(255,255,255,.12); color:#fff; }
+
+/* ----- Screenshots showcase ----- */
+.shots-scroll {
+  display:grid; grid-auto-flow:column; grid-auto-columns: 248px; gap: 26px;
+  overflow-x:auto; padding: 8px 4px 26px; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.shots-scroll::-webkit-scrollbar { height:8px; }
+.shots-scroll::-webkit-scrollbar-thumb { background:var(--line-strong); border-radius:8px; }
+.shot {
+  scroll-snap-align: center;
+  background: var(--ink);
+  border-radius: 30px;
+  padding: 9px;
+  box-shadow: var(--sh-lg);
+  transition: transform .35s var(--ease);
+}
+.shot:hover { transform: translateY(-6px); }
+.shot .scr { position:relative; border-radius: 23px; overflow:hidden; background:#fff; aspect-ratio: 1080/2340; }
+.shot .scr img { width:100%; height:100%; object-fit:cover; display:block; }
+.shot .cap { text-align:center; color:#fff; font-size:.82rem; font-weight:500; padding:11px 0 4px; letter-spacing:-.01em; }
+.shots-hint { text-align:center; font-size:.84rem; color:var(--slate-light); margin-top:6px; }
+
+/* ----- Contact band (footer area) ----- */
+.contact-band { display:grid; grid-template-columns: repeat(3,1fr); gap:22px; margin-bottom:8px; }
+.contact-tile { display:flex; gap:15px; align-items:flex-start; padding:24px; background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); transition: box-shadow .3s, transform .3s; }
+.contact-tile:hover { box-shadow:var(--sh-sm); transform:translateY(-2px); }
+.contact-tile .ct-ico { width:44px; height:44px; border-radius:12px; background:var(--blue-tint); color:var(--blue); display:grid; place-items:center; flex-shrink:0; }
+.contact-tile .ct-ico svg { width:21px; height:21px; }
+.contact-tile h4 { font-size:1rem; margin-bottom:3px; }
+.contact-tile p, .contact-tile a { font-size:.9rem; color:var(--slate); }
+.contact-tile a { color:var(--blue); font-weight:500; }
+
+@media (max-width: 900px) {
+  .contact-band { grid-template-columns: 1fr; }
+}
+@media (max-width: 540px) {
+  .shots-scroll { grid-auto-columns: 210px; }
+}
+
+/* ==========================================================================
+   ====  HOW IT WORKS — premium scroll walkthrough  ====
+   ========================================================================== */
+.hiw { background:#fff; padding:96px 0 0; }
+.hiw .section-head { margin-bottom:32px; }
+.hiw-tabwrap { display:flex; justify-content:center; }
+.hiw-tabs { display:inline-flex; gap:6px; padding:6px; background:var(--mist); border:1px solid var(--line); border-radius:var(--r-pill); }
+.hiw-tab { padding:12px 30px; border-radius:var(--r-pill); font-size:.96rem; font-weight:600; color:var(--slate); transition:.25s var(--ease); white-space:nowrap; }
+.hiw-tab.active { background:#fff; color:var(--ink); box-shadow:var(--sh-sm); }
+.hiw-panel { display:none; }
+.hiw-panel.active { display:block; }
+
+/* scroll stage */
+.hiw-track { position:relative; height:520vh; }
+.hiw-pin { position:sticky; top:var(--nav-h); height:calc(100vh - var(--nav-h)); display:flex; align-items:center; overflow:hidden; }
+.hiw-stagewrap { position:relative; width:100%; max-width:1160px; height:100%; margin:0 auto; padding:0 28px; }
+
+/* the single device */
+.hiw-device { position:absolute; left:50%; top:50%; height:min(66vh,560px); aspect-ratio:1080/2280; transform:translate(-50%,-50%) translateX(var(--px,0px)); transition:transform 1s var(--ease); will-change:transform; }
+.dev-frame { position:relative; width:100%; height:100%; background:linear-gradient(145deg,#23252b,#0b0c0f); border-radius:46px; padding:9px; box-shadow:0 50px 90px -34px rgba(15,29,61,.45), 0 0 0 1.5px rgba(0,0,0,.08), inset 0 0 0 2px rgba(255,255,255,.05); }
+.dev-frame::after { content:""; position:absolute; top:16px; left:50%; transform:translateX(-50%); width:11px; height:11px; border-radius:50%; background:#060607; box-shadow:inset 0 0 0 2px #2c2d33; z-index:3; }
+.dev-screen { position:relative; width:100%; height:100%; border-radius:38px; overflow:hidden; background:#eceff4; }
+.dev-screen img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center; opacity:0; transition:opacity .7s var(--ease); }
+.dev-screen img.on { opacity:1; }
+
+/* step text */
+.hiw-steps { position:absolute; inset:0; pointer-events:none; }
+.hiw-step { position:absolute; top:50%; max-width:340px; opacity:0; transform:translateY(-50%) translateY(18px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.hiw-step.on { opacity:1; transform:translateY(-50%); }
+.hiw-step[data-side="left"] { left:30px; text-align:left; }
+.hiw-step[data-side="right"] { right:30px; text-align:right; }
+.hiw-step[data-side="center"] { left:50%; top:auto; bottom:4%; max-width:520px; text-align:center; transform:translateX(-50%) translateY(18px); }
+.hiw-step[data-side="center"].on { transform:translateX(-50%); }
+.hiw-num { font-size:.82rem; font-weight:700; letter-spacing:.22em; color:var(--blue); }
+.hiw-step h3 { font-size:clamp(1.7rem,2.8vw,2.4rem); margin:12px 0 14px; letter-spacing:-.03em; line-height:1.08; }
+.hiw-step p { font-size:1.06rem; color:var(--slate); line-height:1.5; }
+
+/* progress dots + hint */
+.hiw-dots { position:absolute; left:50%; bottom:20px; transform:translateX(-50%); display:flex; gap:8px; z-index:4; }
+.hiw-dots i { width:7px; height:7px; border-radius:50%; background:var(--line-strong); transition:.35s var(--ease); }
+.hiw-dots i.on { background:var(--blue); width:24px; border-radius:6px; }
+.hiw-scrollhint { text-align:center; color:var(--slate-light); font-size:.84rem; padding:16px 28px 0; }
+
+/* WebShare */
+.hiw-subwrap { display:flex; justify-content:center; margin:30px 0 36px; }
+.hiw-subtabs { display:inline-flex; gap:4px; padding:5px; background:#fff; border:1px solid var(--line); border-radius:var(--r-pill); box-shadow:var(--sh-xs); }
+.hiw-subtab { padding:9px 22px; border-radius:var(--r-pill); font-size:.9rem; font-weight:600; color:var(--slate); transition:.25s var(--ease); }
+.hiw-subtab.active { background:var(--blue); color:#fff; }
+.hiw-sub { display:none; }
+.hiw-sub.active { display:block; }
+.hiw-gallery { display:grid; grid-auto-flow:column; grid-auto-columns:236px; gap:30px; overflow-x:auto; padding:8px 4px 30px; scroll-snap-type:x mandatory; }
+.hiw-gallery .gshot { scroll-snap-align:center; }
+.hiw-gallery .dev-frame { border-radius:34px; padding:7px; }
+.hiw-gallery .dev-screen { border-radius:28px; }
+.hiw-empty { max-width:560px; margin:0 auto; text-align:center; padding:54px 30px; border:1.5px dashed var(--line-strong); border-radius:var(--r-xl); background:var(--paper); }
+.hiw-empty .ee-ico { width:54px; height:54px; border-radius:14px; background:var(--blue-tint); color:var(--blue); display:grid; place-items:center; margin:0 auto 18px; }
+.hiw-empty .ee-ico svg { width:26px; height:26px; }
+.hiw-empty h4 { margin-bottom:8px; }
+.hiw-empty p { font-size:.94rem; color:var(--slate); }
+.hiw-empty code { background:var(--cloud); padding:2px 7px; border-radius:6px; font-size:.82rem; color:var(--charcoal); }
+
+@media (max-width: 860px) {
+  .hiw-track { height:440vh; }
+  .hiw-device { height:min(52vh,420px); top:36%; transform:translate(-50%,-50%) !important; }
+  .hiw-stagewrap.center-step .hiw-device { top:28%; height:min(44vh,340px); }
+  .hiw-step { top:auto; bottom:5%; left:50% !important; right:auto !important; max-width:90%; text-align:center !important; transform:translateX(-50%) translateY(18px); }
+  .hiw-step.on { transform:translateX(-50%); }
+  .hiw-tab { padding:11px 22px; }
+}
+
+/* ===== WiFi Mode walkthrough — alt devices (laptop / iPhone) + final combined ===== */
+.hiw-track.wifi { height:760vh; }
+.hiw-device { opacity:0; transition:transform 1s var(--ease), opacity .55s var(--ease), height .7s var(--ease), top .7s var(--ease); }
+.hiw-device.on { opacity:1; }
+/* centered steps (phone above, text below): lift + shrink the phone so the text always has room */
+.hiw-stagewrap.center-step .hiw-device { top:39%; height:min(56vh,460px); }
+.hiw-stagewrap.center-step .hiw-step[data-side="center"] { bottom:3%; }
+
+.hiw-altdev { position:absolute; left:50%; top:50%; opacity:0; transform:translate(-50%,-50%) translateX(var(--px,0px)); transition:transform 1s var(--ease), opacity .55s var(--ease); will-change:transform,opacity; }
+.hiw-altdev.on { opacity:1; }
+/* alt + final device screens hold a single static image (no cross-fade toggling) */
+.hiw-altdev .dev-screen img, .final-devices .dev-screen img { opacity:1; }
+
+/* ===== Receiver walkthrough: dual-phone (both devices) steps ===== */
+.hiw-track.receiver { height:640vh; }
+.hiw-track.hotspot { height:840vh; }
+.hiw-altdev.dual { display:flex; align-items:flex-end; justify-content:center; gap:28px; width:auto; height:auto; top:44%; }
+.hiw-altdev.dual .dual-phone { width:min(27vw,206px); text-align:center; }
+.hiw-altdev.dual .dev-frame { width:100%; height:auto; }
+.hiw-altdev.dual .dev-screen { height:auto; aspect-ratio:1080/2340; }
+.hiw-altdev.dual .dev-screen img { object-fit:cover; object-position:top center; }
+.hiw-altdev.dual small { display:block; margin-top:13px; font-size:.78rem; font-weight:600; color:var(--slate); }
+@media (max-width: 860px) {
+  .hiw-altdev.dual { gap:14px; top:34%; }
+  .hiw-altdev.dual .dual-phone { width:min(36vw,148px); }
+  .hiw-altdev.dual small { font-size:.66rem; margin-top:9px; }
+  /* centered steps on mobile: lift + shrink phone so the long description fits below */
+  .hiw-stagewrap.center-step .hiw-device { top:22%; height:min(38vh,290px); }
+  .hiw-stagewrap.center-step .hiw-step[data-side="center"] { bottom:4%; }
+}
+
+/* iPhone frame */
+.hiw-altdev.iphone { height:min(62vh,520px); aspect-ratio:645/1290; }
+.dev-frame.iphone { border-radius:50px; background:linear-gradient(145deg,#26282e,#0b0c0f); }
+.dev-frame.iphone::after { width:62px; height:15px; border-radius:10px; top:14px; background:#060607; box-shadow:none; }
+.dev-frame.iphone .dev-screen { border-radius:42px; }
+
+/* Laptop / browser frame */
+.hiw-altdev.laptop { width:min(58vw,620px); }
+.frame-laptop { position:relative; width:100%; background:#0c0d10; border-radius:16px 16px 6px 6px; padding:9px 9px 0; box-shadow:0 44px 80px -34px rgba(15,29,61,.42), 0 0 0 1.5px rgba(0,0,0,.08); }
+.lt-bar { height:30px; display:flex; align-items:center; gap:7px; padding:0 6px; }
+.lt-bar span { width:10px; height:10px; border-radius:50%; background:#3a3b42; }
+.lt-bar span:nth-child(1){ background:#ff5f57; } .lt-bar span:nth-child(2){ background:#febc2e; } .lt-bar span:nth-child(3){ background:#28c840; }
+.lt-bar i { margin-left:12px; flex:1; height:18px; background:#1b1c21; border-radius:5px; color:#8a8b94; font-size:.6rem; font-style:normal; display:flex; align-items:center; padding:0 10px; letter-spacing:.02em; }
+.lt-screen { border-radius:5px 5px 0 0; overflow:hidden; background:#fff; aspect-ratio:16/9.6; }
+.lt-screen img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+.lt-base { width:118%; height:13px; margin:0 0 0 -9%; background:linear-gradient(#cdd3dd,#a7afbd); border-radius:0 0 13px 13px; box-shadow:0 16px 26px -14px rgba(15,29,61,.4); }
+
+/* Final combined three-device result */
+.hiw-final { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px; padding:0 28px; opacity:0; pointer-events:none; transition:opacity .6s var(--ease); }
+.hiw-final.on { opacity:1; pointer-events:auto; }
+.final-head { text-align:center; max-width:700px; }
+.final-head h3 { font-size:clamp(1.8rem,3vw,2.5rem); margin:10px 0 12px; letter-spacing:-.03em; line-height:1.1; }
+.final-head p { font-size:1.06rem; color:var(--slate); }
+.final-devices { display:flex; align-items:flex-end; justify-content:center; }
+.final-devices .dev-frame { height:auto; width:100%; }
+.final-devices .dev-screen { height:auto; }
+.final-devices img { object-fit:cover; object-position:top center; }
+.fd-phone, .fd-iphone, .fd-laptop { text-align:center; }
+.fd-phone { width:150px; z-index:2; margin-right:-30px; }
+.fd-iphone { width:150px; z-index:2; margin-left:-30px; }
+.fd-laptop { width:460px; z-index:3; }
+.fd-phone .dev-screen { aspect-ratio:1080/2340; }
+.fd-iphone .dev-screen { aspect-ratio:645/1290; }
+.final-devices small { display:block; margin-top:14px; font-size:.78rem; font-weight:600; color:var(--slate); }
+
+@media (max-width: 860px) {
+  .hiw-altdev { transform:translate(-50%,-50%) !important; top:36%; }
+  .hiw-altdev.laptop { width:min(88vw,440px); }
+  .hiw-altdev.iphone { height:min(46vh,360px); }
+  .hiw-final { gap:22px; justify-content:flex-start; padding-top:30px; }
+  .fd-laptop { width:210px; } .fd-phone, .fd-iphone { width:80px; margin:0 -14px; }
+  .final-head h3 { font-size:1.5rem; }
+  .final-devices small { font-size:.6rem; }
+}
+
+/* ==========================================================================
+   ====  SCROLL-SCRUBBED VIDEO HERO  ====
+   ========================================================================== */
+.vhero { position:relative; background:#06080c; }
+.vhero-track { position:relative; height:380vh; }
+.vhero-pin { position:sticky; top:0; height:100vh; overflow:hidden; background:#06080c; }
+.vhero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#06080c; display:block; }
+.vhero-scrim { position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg, rgba(6,8,12,.58) 0%, rgba(6,8,12,.20) 24%, rgba(6,8,12,.12) 58%, rgba(6,8,12,.50) 100%); }
+.vhero-stage { position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:0 28px; z-index:2; }
+.vhero-text, .vhero-cta { grid-area:1 / 1; }
+.vhero-text { max-width:980px; will-change:opacity, transform; }
+.vhero-text h1 { color:#fff; font-size:clamp(2.6rem, 6.2vw, 5.2rem); letter-spacing:-.04em; line-height:1.02; text-shadow:0 2px 40px rgba(0,0,0,.4); }
+.vhero-text p { color:rgba(255,255,255,.88); font-size:clamp(1.05rem, 1.9vw, 1.45rem); margin-top:22px; font-weight:500; letter-spacing:.005em; text-shadow:0 2px 24px rgba(0,0,0,.35); }
+.vhero-cta { justify-self:center; align-self:center; display:inline-flex; align-items:center; gap:12px;
+  background:#fff; color:var(--ink); font-weight:600; font-size:1.05rem; padding:16px 30px; border-radius:var(--r-pill);
+  box-shadow:0 24px 60px -22px rgba(0,0,0,.6); opacity:0; transform:translateY(16px); pointer-events:none;
+  transition:opacity .9s var(--ease), transform .9s var(--ease); }
+.vhero-cta svg { width:22px; height:22px; }
+.vhero-cta.show { opacity:1; transform:none; pointer-events:auto; }
+.vhero-cta.show:hover { transform:translateY(-2px); box-shadow:0 30px 70px -24px rgba(0,0,0,.7); }
+/* scroll hint */
+.vhero-hint { position:absolute; left:50%; bottom:32px; transform:translateX(-50%); width:25px; height:40px;
+  border:2px solid rgba(255,255,255,.5); border-radius:13px; display:flex; justify-content:center; padding-top:7px; z-index:2; transition:opacity .5s var(--ease); }
+.vhero-hint span { width:4px; height:8px; border-radius:2px; background:rgba(255,255,255,.85); animation:vhint 1.7s ease-in-out infinite; }
+@keyframes vhint { 0%{ transform:translateY(0); opacity:1; } 55%{ transform:translateY(11px); opacity:0; } 100%{ transform:translateY(0); opacity:0; } }
+
+/* transparent, light nav while over the video hero (overrides .scrolled) */
+.nav.over-hero { background:transparent !important; backdrop-filter:none; -webkit-backdrop-filter:none; border-bottom-color:transparent; box-shadow:none; }
+.nav.over-hero .brand { color:#fff; }
+.nav.over-hero .nav-links a { color:rgba(255,255,255,.82); }
+.nav.over-hero .nav-links a:hover { color:#fff; background:rgba(255,255,255,.12); }
+.nav.over-hero .nav-links a.current { color:#fff; }
+.nav.over-hero .nav-links a.current::after { background:#fff; }
+.nav.over-hero .nav-toggle span, .nav.over-hero .nav-toggle span::before, .nav.over-hero .nav-toggle span::after { background:#fff; }
+
+@media (max-width: 820px) {
+  .vhero-track { height:340vh; }
+  .vhero-text h1 { font-size:clamp(2.2rem, 9vw, 3.2rem); }
+}
+
+/* ==========================================================================
+   ====  INTERACTIVE FEATURE CARDS (hover/tap drawer)  ====
+   ========================================================================== */
+.feat-grid { display:grid; grid-template-columns:repeat(5, 1fr); gap:18px; }
+.feat-card {
+  position:relative; overflow:hidden; background:#fff; border:1px solid var(--line);
+  border-radius:18px; padding:26px 22px; min-height:300px; cursor:pointer;
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+.feat-card:hover, .feat-card.open, .feat-card:focus-visible {
+  transform:translateY(-6px); box-shadow:var(--sh-lg); border-color:rgba(37,99,235,.55); outline:none;
+}
+.fc-icon { width:48px; height:48px; border-radius:13px; background:var(--blue-tint); color:var(--blue);
+  display:grid; place-items:center; margin-bottom:18px; transition:transform .4s var(--ease); }
+.fc-icon svg { width:24px; height:24px; }
+.feat-card:hover .fc-icon, .feat-card.open .fc-icon { transform:scale(1.08) rotate(-3deg); }
+.fc-title { font-size:1.05rem; font-weight:700; color:var(--ink); letter-spacing:-.01em; line-height:1.25; }
+.fc-short { font-size:.92rem; color:var(--slate); margin-top:8px; transition:opacity .3s var(--ease); }
+.feat-card:hover .fc-short, .feat-card.open .fc-short { opacity:0; }
+.fc-drawer {
+  position:absolute; left:0; right:0; bottom:0; padding:22px;
+  background:linear-gradient(180deg, #fff 0%, #f5f8fd 100%);
+  border-top:1px solid var(--line); border-radius:16px;
+  transform:translateY(101%); transition:transform .46s var(--ease);
+  box-shadow:0 -16px 30px -24px rgba(15,29,61,.2);
+}
+.feat-card:hover .fc-drawer, .feat-card.open .fc-drawer { transform:translateY(0); }
+.fc-desc { font-size:.86rem; color:var(--slate); line-height:1.5; }
+.fc-where { margin-top:14px; }
+.fcw-label { display:block; font-size:.65rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--blue); margin-bottom:7px; }
+.fcw-path { display:block; font-size:.8rem; color:var(--charcoal); font-weight:500; background:var(--mist); border:1px solid var(--line); border-radius:9px; padding:9px 11px; line-height:1.45; }
+
+/* small feature strip */
+.feat-strip { display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-top:22px; }
+.fs-item { display:flex; align-items:center; gap:13px; padding:15px 18px; background:var(--paper); border:1px solid var(--line); border-radius:14px;
+  transition:border-color .3s var(--ease), box-shadow .3s var(--ease), transform .3s var(--ease); }
+.fs-item:hover { border-color:var(--line-strong); box-shadow:var(--sh-xs); transform:translateY(-2px); }
+.fs-ico { width:38px; height:38px; flex-shrink:0; border-radius:10px; background:#fff; border:1px solid var(--line); color:var(--navy); display:grid; place-items:center; }
+.fs-ico svg { width:19px; height:19px; }
+.fs-text { display:flex; flex-direction:column; line-height:1.2; min-width:0; }
+.fs-text b { font-size:.9rem; color:var(--ink); font-weight:600; letter-spacing:-.01em; }
+.fs-text span { font-size:.75rem; color:var(--slate-light); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+@media (max-width: 1080px) { .feat-grid { grid-template-columns:repeat(3, 1fr); } }
+@media (max-width: 820px) { .feat-grid { grid-template-columns:repeat(2, 1fr); } .feat-strip { grid-template-columns:repeat(2, 1fr); } }
+@media (max-width: 520px) { .feat-grid { grid-template-columns:1fr; } .feat-strip { grid-template-columns:1fr; } }
+
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#home" class="brand" aria-label="OlowShare home">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9 17.5L20 6.5" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 7.5L6.5 10" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/></svg></span>
+        OlowShare
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#download">Download</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#download" class="btn btn-primary btn-desktop">Download App</a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="mobile-menu">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#platforms">Cross-Platform</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <a href="#download" class="btn btn-primary btn-block">Download App</a>
+  </div>
+
+  <main>
+    <!-- ===================== 1. HERO ===================== -->
+    <section class="vhero anchor" id="home">
+      <div class="vhero-track" id="vheroTrack">
+        <div class="vhero-pin">
+          <video class="vhero-video" id="vheroVideo" src="assets/herosection.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+          <div class="vhero-scrim"></div>
+          <div class="vhero-stage">
+            <div class="vhero-text" id="vheroText">
+              <h1>Break Free From File Sharing Limits</h1>
+              <p>Photos. Videos. Apps. Music. Documents. Instantly.</p>
+            </div>
+            <a class="vhero-cta" id="vheroCta" href="https://play.google.com/store/apps/details?id=your.app.id" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3.6 2.3 13.4 12 3.6 21.7c-.3-.2-.5-.6-.5-1.1V3.4c0-.5.2-.9.5-1.1Z" fill="#34A853"/><path d="m13.4 12 3-3 3.6 2c.7.4.7 1.6 0 2l-3.6 2-3-3Z" fill="#FBBC04"/><path d="M3.6 2.3c.3-.2.7-.2 1.1 0L16.4 9l-3 3-9.8-9.7Z" fill="#4285F4"/><path d="m13.4 12 3 3L4.7 21.7c-.4.2-.8.2-1.1 0L13.4 12Z" fill="#EA4335"/></svg>
+              Download on Google Play
+            </a>
+          </div>
+          <div class="vhero-hint" id="vheroHint" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. TRUSTED BY / STATS ===================== -->
+    <section class="section-sm bg-paper anchor" id="stats">
+      <div class="container">
+        <p style="text-align:center;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-light);margin-bottom:30px">Trusted by millions of people worldwide</p>
+        <div class="kpi-ribbon reveal">
+          <div class="kpi"><div class="k-num"><span data-target="320">0</span><span class="suf">M+</span></div><div class="k-lbl">Downloads</div></div>
+          <div class="kpi"><div class="k-num"><span data-target="480">0</span><span class="suf">M+</span></div><div class="k-lbl">Files Shared</div></div>
+          <div class="kpi"><div class="k-num"><span data-target="190">0</span><span class="suf">+</span></div><div class="k-lbl">Countries</div></div>
+          <div class="kpi"><div class="k-num"><span data-target="1.2" data-decimals="1">0</span><span class="suf">B+</span></div><div class="k-lbl">Transfers</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. FEATURES ===================== -->
+    <section class="section anchor" id="features">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">Features</span>
+          <h2>Everything you need, beautifully simple</h2>
+          <p>Hover any card to see how it works and exactly where to find it in the app.</p>
+        </div>
+
+        <div class="feat-grid reveal d1">
+          <!-- 1 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <h3 class="fc-title">Lightning Fast Transfers</h3>
+            <p class="fc-short">Share files in seconds.</p>
+            <div class="fc-drawer"><p class="fc-desc">Transfer photos, videos, apps, documents, music, and folders quickly using high-speed wireless sharing.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → Send Files → Select files → Send</span></div></div>
+          </article>
+          <!-- 2 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8.3 12.5a3.7 3.7 0 0 1 7.4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="13" r="1.5" fill="currentColor"/><path d="m4 20 16-16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h3 class="fc-title">No Internet Required</h3>
+            <p class="fc-short">Send files without data.</p>
+            <div class="fc-drawer"><p class="fc-desc">Use OlowShare to transfer files directly between nearby devices without needing mobile data or an internet connection.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Use Send Files or WebShare Hotspot Mode</span></div></div>
+          </article>
+          <!-- 3 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H6a2 2 0 0 0-2 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 11v6m-3-3h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h3 class="fc-title">Large File Support</h3>
+            <p class="fc-short">Send big files easily.</p>
+            <div class="fc-drawer"><p class="fc-desc">Share large videos, folders, documents, and media files without compression or complicated upload limits.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → Send Files → Select any large file → Send</span></div></div>
+          </article>
+          <!-- 4 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5" width="12" height="9" rx="2" stroke="currentColor" stroke-width="2"/><rect x="15.5" y="9" width="6" height="11" rx="1.8" stroke="currentColor" stroke-width="2"/><path d="M6 18h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h3 class="fc-title">Connect Up To 4 Devices</h3>
+            <p class="fc-short">Share with multiple devices.</p>
+            <div class="fc-drawer"><p class="fc-desc">Connect up to 4 devices at the same time and transfer files across multiple phones, tablets, or computers in one session.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → WebShare → Connected Devices</span></div></div>
+          </article>
+          <!-- 5 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 9 5-9 5-9-5 9-5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <h3 class="fc-title">Cross-Platform Support</h3>
+            <p class="fc-short">Android, desktop, and browser.</p>
+            <div class="fc-drawer"><p class="fc-desc">Share between Android phones, Windows computers, iPhones, tablets, and browsers using OlowShare WebShare.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → WebShare → WiFi Mode or Hotspot Mode</span></div></div>
+          </article>
+          <!-- 6 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="10" r="1.6" stroke="currentColor" stroke-width="2"/><path d="m21 16-5-5L7 20" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <h3 class="fc-title">Photos, Videos &amp; Files</h3>
+            <p class="fc-short">Share all file types.</p>
+            <div class="fc-drawer"><p class="fc-desc">Send photos, videos, music, documents, folders, contacts, and more from one clean file selection experience.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → Send Files → Scroll through file categories</span></div></div>
+          </article>
+          <!-- 7 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2"/></svg></div>
+            <h3 class="fc-title">Apps Sharing</h3>
+            <p class="fc-short">Send installed apps.</p>
+            <div class="fc-drawer"><p class="fc-desc">Share installed Android apps directly from your phone without searching for them again.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → Send Files → Scroll right in the category navigation → Apps</span></div></div>
+          </article>
+          <!-- 8 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18" stroke="currentColor" stroke-width="2"/><path d="M12 3c2.6 2.7 2.6 15 0 18M12 3c-2.6 2.7-2.6 15 0 18" stroke="currentColor" stroke-width="2"/></svg></div>
+            <h3 class="fc-title">WebShare</h3>
+            <p class="fc-short">Share through a browser.</p>
+            <div class="fc-drawer"><p class="fc-desc">Use a browser to connect your phone with Windows, iPhone, tablet, or desktop devices and transfer files easily.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → WebShare → Choose WiFi Mode or Hotspot Mode</span></div></div>
+          </article>
+          <!-- 9 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4v5c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V7l8-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="fc-title">Secure Device Approval</h3>
+            <p class="fc-short">Approve every connection.</p>
+            <div class="fc-drawer"><p class="fc-desc">OlowShare gives you control over which devices can connect, helping keep file transfers safe and intentional.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → Top-left menu → Settings → File Access</span></div></div>
+          </article>
+          <!-- 10 -->
+          <article class="feat-card" tabindex="0">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 9a9 9 0 1 1-.4 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8v4.5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="fc-title">Transfer History</h3>
+            <p class="fc-short">View past transfers.</p>
+            <div class="fc-drawer"><p class="fc-desc">Quickly check previous files you sent or received so you can keep track of your sharing activity.</p><div class="fc-where"><span class="fcw-label">Where to find it</span><span class="fcw-path">Open OlowShare → Main screen → Top-right history icon</span></div></div>
+          </article>
+        </div>
+
+        <!-- small feature strip -->
+        <div class="feat-strip reveal d2">
+          <div class="fs-item">
+            <span class="fs-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18" stroke="currentColor" stroke-width="2"/><path d="M12 3c2.6 2.7 2.6 15 0 18M12 3c-2.6 2.7-2.6 15 0 18" stroke="currentColor" stroke-width="2"/></svg></span>
+            <div class="fs-text"><b>10+ Languages</b><span>Settings → Language</span></div>
+          </div>
+          <div class="fs-item">
+            <span class="fs-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a6.5 6.5 0 1 0 9 9 9 9 0 1 1-9-9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+            <div class="fs-text"><b>Light &amp; Dark Theme</b><span>Settings → Theme</span></div>
+          </div>
+          <div class="fs-item">
+            <span class="fs-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/><path d="M6.2 18.5a6 6 0 0 1 11.6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <div class="fs-text"><b>Custom Profile Picture</b><span>Top-left menu → Profile</span></div>
+          </div>
+          <div class="fs-item">
+            <span class="fs-ico"><svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="2"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6" stroke="currentColor" stroke-width="2"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" stroke="currentColor" stroke-width="2"/></svg></span>
+            <div class="fs-text"><b>Custom Storage Location</b><span>Settings → Storage Location</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. HOW IT WORKS ===================== -->
+    <section class="hiw anchor" id="how">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">How It Works</span>
+          <h2>Transfer files in seconds</h2>
+          <p>Transfer files in seconds with a simple and secure process.</p>
+        </div>
+        <div class="hiw-tabwrap reveal">
+          <div class="hiw-tabs" role="tablist">
+            <button class="hiw-tab active" data-hiwtab="send" role="tab">Send Files</button>
+            <button class="hiw-tab" data-hiwtab="web" role="tab">WebShare</button>
+            <button class="hiw-tab" data-hiwtab="receiver" role="tab">Receiver</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEND FILES — scroll walkthrough -->
+      <div class="hiw-panel active" data-hiwpanel="send">
+        <div class="hiw-track" id="hiwTrack">
+          <div class="hiw-pin">
+            <div class="hiw-stagewrap">
+              <div class="hiw-device on" id="hiwDevice">
+                <div class="dev-frame">
+                  <div class="dev-screen">
+                    <img class="on" src="images/how-it-works/send-files/1-open.jpg" alt="Open OlowShare on the sender phone" />
+                    <img src="images/how-it-works/send-files/2-select.jpg" alt="Select files to share" />
+                    <img src="images/how-it-works/send-files/3-qr.jpg" alt="Secure QR code generated" />
+                    <img src="images/how-it-works/send-files/4-receiver-open.jpg" alt="Open OlowShare on the receiving phone" />
+                    <img src="images/how-it-works/send-files/5-scan.jpg" alt="Scan the QR code to connect" />
+                    <img src="images/how-it-works/send-files/6-sent.jpg" alt="Files sent successfully" />
+                    <img src="images/how-it-works/send-files/7-received.jpg" alt="Files received successfully" />
+                  </div>
+                </div>
+              </div>
+              <div class="hiw-steps">
+                <div class="hiw-step on" data-dir="0" data-side="center"><span class="hiw-num">STEP 01</span><h3>Open OlowShare</h3><p>Launch OlowShare on the sender device and tap the Send Files option. This is the starting point for transferring photos, videos, apps, documents, contacts, music, and other files to another device.</p></div>
+                <div class="hiw-step" data-dir="1" data-side="left"><span class="hiw-num">STEP 02</span><h3>Select Files</h3><p>Browse your device and choose everything you want to share. OlowShare allows you to quickly select multiple files at once, making it easy to transfer large collections in a single session.</p></div>
+                <div class="hiw-step" data-dir="-1" data-side="right"><span class="hiw-num">STEP 03</span><h3>Generate QR Code</h3><p>Once your files are selected, OlowShare instantly generates a secure QR code. This QR code creates a fast connection between devices without requiring complicated setup steps.</p></div>
+                <div class="hiw-step" data-dir="1" data-side="left"><span class="hiw-num">STEP 04</span><h3>Open Receiver Device</h3><p>On the receiving device, open OlowShare and choose the option to receive files. The receiver is now ready to establish a connection with the sender device.</p></div>
+                <div class="hiw-step" data-dir="-1" data-side="right"><span class="hiw-num">STEP 05</span><h3>Scan &amp; Connect</h3><p>Use the receiver device to scan the QR code displayed on the sender phone. Within seconds, both devices recognize each other and establish a secure connection.</p></div>
+                <div class="hiw-step" data-dir="1" data-side="left"><span class="hiw-num">STEP 06</span><h3>Files Sent</h3><p>The selected files begin transferring immediately. OlowShare uses high-speed local connections to move files quickly without unnecessary delays or interruptions.</p></div>
+                <div class="hiw-step" data-dir="-1" data-side="right"><span class="hiw-num">STEP 07</span><h3>Files Received</h3><p>The transfer is completed successfully and all selected files are available on the receiving device. Photos, videos, documents, and other content arrive ready to use instantly.</p></div>
+              </div>
+              <div class="hiw-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+        <p class="hiw-scrollhint">Scroll to walk through each step</p>
+      </div>
+
+      <!-- WEBSHARE -->
+      <div class="hiw-panel" data-hiwpanel="web">
+        <div class="container">
+          <div class="hiw-subwrap">
+            <div class="hiw-subtabs" role="tablist">
+              <button class="hiw-subtab active" data-hiwsub="hotspot" role="tab">Hotspot Mode</button>
+              <button class="hiw-subtab" data-hiwsub="wifi" role="tab">WiFi Mode</button>
+            </div>
+          </div>
+          <div class="hiw-sub active" data-hiwsub="hotspot">
+            <div class="hiw-track hotspot" id="hiwTrackHotspot">
+              <div class="hiw-pin">
+                <div class="hiw-stagewrap">
+                  <div class="hiw-device on">
+                    <div class="dev-frame">
+                      <div class="dev-screen">
+                        <img class="on" src="images/how-it-works/webshare-hotspot/1-open.jpg" alt="Open WebShare" />
+                        <img src="images/how-it-works/webshare-hotspot/2-hotspot.jpg" alt="Choose Hotspot Mode" />
+                        <img src="images/how-it-works/webshare-hotspot/3-join.jpg" alt="Join the network" />
+                        <img src="images/how-it-works/webshare-hotspot/4-url.jpg" alt="Open the URL" />
+                        <img src="images/how-it-works/webshare-hotspot/5-wifi.png" alt="Check WiFi connection" />
+                        <img src="images/how-it-works/webshare-hotspot/6-permission1.png" alt="Request permission" />
+                        <img src="images/how-it-works/webshare-hotspot/7-permission2.png" alt="Allow access" />
+                        <img src="images/how-it-works/webshare-hotspot/8-devices.png" alt="View connected devices" />
+                        <img src="images/how-it-works/webshare-hotspot/9-sender.png" alt="Sender connected" />
+                        <img src="images/how-it-works/webshare-hotspot/10-receiver.png" alt="Receiver connected" />
+                        <img src="images/how-it-works/webshare-hotspot/11-sent.png" alt="Files sent successfully" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hiw-steps">
+                    <div class="hiw-step on" data-dir="0" data-side="center" data-visual="device"><span class="hiw-num">STEP 01</span><h3>Open WebShare</h3><p>Open OlowShare on the sender phone and tap WebShare. This starts the browser-based sharing process and prepares the phone to create a connection for nearby devices.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 02</span><h3>Choose Hotspot Mode</h3><p>Select Hotspot Mode when you want to share files without using internet data. The receiver connects directly to the sender phone’s hotspot for a fast local transfer.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 03</span><h3>Join The Network</h3><p>On the receiving device, join the hotspot network created by the sender phone. This connects both devices to the same local transfer environment.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 04</span><h3>Open The URL</h3><p>Open the WebShare URL in the receiver’s browser. This allows the receiver device to access the sender phone through a simple web connection.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 05</span><h3>Check WiFi Connection</h3><p>Confirm that the receiving device is connected to the correct hotspot network before continuing. This helps make sure the WebShare connection works smoothly.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 06</span><h3>Request Permission</h3><p>The sender phone receives a connection request from the receiver. This step keeps the transfer controlled and prevents unknown devices from connecting without approval.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 07</span><h3>Allow Access</h3><p>Approve the request on the sender phone. Once permission is granted, the receiving device can connect securely and prepare to receive files.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 08</span><h3>View Connected Devices</h3><p>The receiver device appears in the connected devices list, confirming that the WebShare connection is active and ready for file transfer.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 09</span><h3>Sender Connected</h3><p>The sender phone confirms that the connection has been established successfully and files can now be shared through WebShare.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 10</span><h3>Receiver Connected</h3><p>The receiver device also confirms the successful connection, showing that both sides are paired and ready to transfer files.</p></div>
+                    <div class="hiw-step" data-dir="0" data-side="center" data-visual="device"><span class="hiw-num">STEP 11</span><h3>Files Sent Successfully</h3><p>The sender selects and sends the files. OlowShare completes the transfer through the hotspot connection, making it easy to share without internet data.</p></div>
+                  </div>
+                  <div class="hiw-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+            <p class="hiw-scrollhint">Scroll to walk through each step</p>
+          </div>
+          <div class="hiw-sub" data-hiwsub="wifi">
+            <div class="hiw-track wifi" id="hiwTrackWifi">
+              <div class="hiw-pin">
+                <div class="hiw-stagewrap">
+                  <!-- Android phone (steps 1–7) -->
+                  <div class="hiw-device on">
+                    <div class="dev-frame">
+                      <div class="dev-screen">
+                        <img class="on" src="images/how-it-works/webshare-wifi/1-open.jpg" alt="Open WebShare" />
+                        <img src="images/how-it-works/webshare-wifi/2-mode.jpg" alt="Choose WiFi Mode" />
+                        <img src="images/how-it-works/webshare-wifi/3-url.jpg" alt="Open the link" />
+                        <img src="images/how-it-works/webshare-wifi/4-permission.png" alt="Allow connection" />
+                        <img src="images/how-it-works/webshare-wifi/5-devices.jpg" alt="Devices connected" />
+                        <img src="images/how-it-works/webshare-wifi/6-select.jpg" alt="Select files" />
+                        <img src="images/how-it-works/webshare-wifi/7-sent.jpg" alt="Files sent" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Windows laptop (step 8) -->
+                  <div class="hiw-altdev laptop" data-step="7">
+                    <div class="frame-laptop">
+                      <div class="lt-bar"><span></span><span></span><span></span><i>olowshare.io/webshare</i></div>
+                      <div class="lt-screen"><img src="images/how-it-works/webshare-wifi/8-windows.png" alt="Files received on Windows" /></div>
+                    </div>
+                    <div class="lt-base"></div>
+                  </div>
+                  <!-- iPhone (step 9) -->
+                  <div class="hiw-altdev iphone" data-step="8">
+                    <div class="dev-frame iphone">
+                      <div class="dev-screen"><img src="images/how-it-works/webshare-wifi/9-ios.jpg" alt="Files received on iOS" /></div>
+                    </div>
+                  </div>
+                  <!-- Final combined result (step 10) -->
+                  <div class="hiw-final" data-step="9">
+                    <div class="final-head">
+                      <span class="hiw-num">ALL CONNECTED</span>
+                      <h3>Files Shared Across Every Device</h3>
+                      <p>With WebShare, a single transfer can reach multiple devices at the same time. Android phones, Windows computers, and iPhones can all access the same files through one simple connection, making sharing faster, easier, and more flexible than ever.</p>
+                    </div>
+                    <div class="final-devices">
+                      <div class="fd-phone"><div class="dev-frame"><div class="dev-screen"><img src="images/how-it-works/webshare-wifi/7-sent.jpg" alt="Android — files sent" /></div></div><small>Android · Sent</small></div>
+                      <div class="fd-laptop"><div class="frame-laptop"><div class="lt-bar"><span></span><span></span><span></span></div><div class="lt-screen"><img src="images/how-it-works/webshare-wifi/8-windows.png" alt="Windows — files received" /></div></div><small>Windows · Received</small></div>
+                      <div class="fd-iphone"><div class="dev-frame iphone"><div class="dev-screen"><img src="images/how-it-works/webshare-wifi/9-ios.jpg" alt="iOS — files received" /></div></div><small>iOS · Received</small></div>
+                    </div>
+                  </div>
+                  <!-- Step text -->
+                  <div class="hiw-steps">
+                    <div class="hiw-step on" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 01</span><h3>Open WebShare</h3><p>Start by opening WebShare from the OlowShare home screen. WebShare makes it possible to transfer files between your phone and other devices directly through a web browser.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 02</span><h3>Choose WiFi Mode</h3><p>Select WiFi Mode to connect devices that are on the same wireless network. This method provides a simple and reliable way to transfer files across phones, tablets, and computers.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 03</span><h3>Open The Link</h3><p>OlowShare generates a unique web address that can be opened on a desktop browser, laptop, tablet, or iPhone. Simply enter the provided URL to begin connecting.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 04</span><h3>Allow Connection</h3><p>When a device attempts to connect, the sender phone receives a permission request. Approve the request to securely authorize access and continue the transfer process.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 05</span><h3>Devices Connected</h3><p>After approval, connected devices appear inside OlowShare. You can easily see which devices are linked and ready to send or receive files.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="device"><span class="hiw-num">STEP 06</span><h3>Select Files</h3><p>Choose the files you want to share and start the transfer. Whether you're sending photos, videos, documents, or folders, the process remains fast and effortless.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device"><span class="hiw-num">STEP 07</span><h3>Files Sent</h3><p>The transfer completes successfully and OlowShare confirms that the selected files have been delivered to the connected devices.</p></div>
+                    <div class="hiw-step" data-dir="1" data-side="left" data-visual="alt"><span class="hiw-num">STEP 08</span><h3>Received On Windows</h3><p>The shared files instantly appear on the connected Windows computer, ready to download, view, organize, or use without additional software.</p></div>
+                    <div class="hiw-step" data-dir="-1" data-side="right" data-visual="alt"><span class="hiw-num">STEP 09</span><h3>Received On iOS</h3><p>The same files are also available on the connected iPhone through the browser session, demonstrating seamless cross-platform compatibility.</p></div>
+                    <div class="hiw-step" data-dir="0" data-side="center" data-visual="final"></div>
+                  </div>
+                  <div class="hiw-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+            <p class="hiw-scrollhint">Scroll to walk through each step</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECEIVER — scroll walkthrough (dual + single phones) -->
+      <div class="hiw-panel" data-hiwpanel="receiver">
+        <div class="hiw-track receiver" id="hiwTrackReceiver">
+          <div class="hiw-pin">
+            <div class="hiw-stagewrap">
+              <!-- single Android phone (steps 2,3,4,6,7,8) -->
+              <div class="hiw-device">
+                <div class="dev-frame">
+                  <div class="dev-screen">
+                    <img class="on" src="images/how-it-works/receiver/s2-select.png" alt="Select sender device" />
+                    <img src="images/how-it-works/receiver/s3-request.jpg" alt="Connection request" />
+                    <img src="images/how-it-works/receiver/s4-approve.jpg" alt="Approve connection" />
+                    <img src="images/how-it-works/receiver/s6-choose.jpg" alt="Choose files" />
+                    <img src="images/how-it-works/receiver/s7-sent.jpg" alt="Transfer complete" />
+                    <img src="images/how-it-works/receiver/s8-received.jpg" alt="Files received" />
+                  </div>
+                </div>
+              </div>
+              <!-- dual phones: step 1 (both home screens) -->
+              <div class="hiw-altdev dual on" data-step="0">
+                <div class="dual-phone"><div class="dev-frame"><div class="dev-screen"><img src="images/how-it-works/receiver/s1-sender.jpg" alt="Sender home screen" /></div></div><small>Sender</small></div>
+                <div class="dual-phone"><div class="dev-frame"><div class="dev-screen"><img src="images/how-it-works/receiver/s1-receiver.jpg" alt="Receiver home screen" /></div></div><small>Receiver</small></div>
+              </div>
+              <!-- dual phones: step 5 (both connected) -->
+              <div class="hiw-altdev dual" data-step="4">
+                <div class="dual-phone"><div class="dev-frame"><div class="dev-screen"><img src="images/how-it-works/receiver/s5-sender.jpg" alt="Sender connected" /></div></div><small>Sender</small></div>
+                <div class="dual-phone"><div class="dev-frame"><div class="dev-screen"><img src="images/how-it-works/receiver/s5-receiver.jpg" alt="Receiver connected" /></div></div><small>Receiver</small></div>
+              </div>
+              <!-- step text -->
+              <div class="hiw-steps">
+                <div class="hiw-step on" data-dir="0" data-side="center" data-visual="alt"><span class="hiw-num">STEP 01</span><h3>Open OlowShare On Both Devices</h3><p>Start by opening OlowShare on both the sender and receiver devices. Both devices must be ready before a connection can be established.</p></div>
+                <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device" data-img="0"><span class="hiw-num">STEP 02</span><h3>Select Sender Device</h3><p>From the receiver device, select the sender device you want to connect with and begin the pairing process.</p></div>
+                <div class="hiw-step" data-dir="1" data-side="left" data-visual="device" data-img="1"><span class="hiw-num">STEP 03</span><h3>Connection Request</h3><p>The sender device receives a connection request and verifies that another device is attempting to pair.</p></div>
+                <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device" data-img="2"><span class="hiw-num">STEP 04</span><h3>Approve Connection</h3><p>The sender confirms the request and allows the receiver device to establish a secure connection.</p></div>
+                <div class="hiw-step" data-dir="0" data-side="center" data-visual="alt"><span class="hiw-num">STEP 05</span><h3>Devices Connected</h3><p>Both devices are now connected successfully and are ready to transfer files instantly.</p></div>
+                <div class="hiw-step" data-dir="1" data-side="left" data-visual="device" data-img="3"><span class="hiw-num">STEP 06</span><h3>Choose Files</h3><p>The sender selects photos, videos, documents, apps, music, or folders to transfer.</p></div>
+                <div class="hiw-step" data-dir="-1" data-side="right" data-visual="device" data-img="4"><span class="hiw-num">STEP 07</span><h3>Transfer Complete</h3><p>The sender device confirms that all selected files have been sent successfully.</p></div>
+                <div class="hiw-step" data-dir="1" data-side="left" data-visual="device" data-img="5"><span class="hiw-num">STEP 08</span><h3>Files Received</h3><p>The receiver device confirms that all files have arrived successfully and are ready to use.</p></div>
+              </div>
+              <div class="hiw-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+        <p class="hiw-scrollhint">Scroll to walk through each step</p>
+      </div>
+    </section>
+
+    <!-- ===================== 5. CROSS PLATFORM ===================== -->
+    <section class="section anchor" id="platforms">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">Cross Platform</span>
+          <h2>One product. Every device.</h2>
+          <p>OlowShare works the same everywhere, and keeps your files in sync across all of them.</p>
+        </div>
+        <div class="grid grid-4">
+          <article class="platform-card featured reveal">
+            <div class="platform-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h4>Android</h4>
+            <p>Phones &amp; tablets · v3.2.0</p>
+            <span class="pf-status" style="color:#8fb4ff"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Available now</span>
+          </article>
+          <article class="platform-card reveal d1">
+            <div class="platform-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 5.7 10.5 4.6V11.4H3V5.7Z" fill="currentColor"/><path d="M11.6 4.4 21 3v8.4h-9.4V4.4Z" fill="currentColor"/><path d="M3 12.6h7.5v6.8L3 18.3v-5.7Z" fill="currentColor"/><path d="M11.6 12.6H21V21l-9.4-1.4v-7Z" fill="currentColor"/></svg></div>
+            <h4>Windows</h4>
+            <p>Windows 10 &amp; 11 · v2.0.1</p>
+            <span class="pf-status"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Available now</span>
+          </article>
+          <article class="platform-card reveal d2">
+            <div class="platform-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M16 3c-1 .1-2.2.8-2.9 1.6-.6.7-1.1 1.8-.9 2.8 1.1.1 2.2-.6 2.9-1.4.6-.8 1-1.9.9-3ZM19 16.5c-.5 1.2-1.1 2.2-1.9 3.1-.7.8-1.3 1.3-2.2 1.3-.8 0-1.1-.5-2.1-.5s-1.3.5-2.1.5c-.9 0-1.6-.6-2.3-1.4C5.9 17.6 5 14.4 6.3 12c.6-1.1 1.8-1.9 3-1.9.9 0 1.7.6 2.2.6.5 0 1.5-.7 2.6-.6.9 0 1.9.4 2.6 1.3-2.3 1.4-1.9 4.6 2.3 5.1Z" fill="currentColor"/></svg></div>
+            <h4>macOS</h4>
+            <p>Apple Silicon &amp; Intel</p>
+            <span class="pf-status soon"><svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Coming soon</span>
+          </article>
+          <article class="platform-card reveal d3">
+            <div class="platform-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c-2 0-3 1.8-3 4 0 1.4.3 2.3-.4 3.4C7.6 12 6 13.4 6 15.6c0 1 .5 1.6 1.2 2.2.3.3.2.8-.2 1.2-.6.6-.5 1.5.4 1.8 1.3.4 2.2-.4 3-.4.9 0 1.9.8 3.2.4.9-.3 1-1.2.4-1.8-.4-.4-.5-.9-.2-1.2.7-.6 1.2-1.2 1.2-2.2 0-2.2-1.6-3.6-2.6-5.2-.7-1.1-.4-2-.4-3.4 0-2.2-1-4-3-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+            <h4>Linux</h4>
+            <p>Ubuntu, Fedora &amp; more</p>
+            <span class="pf-status soon"><svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Coming soon</span>
+          </article>
+        </div>
+        <!-- cross-platform flow -->
+        <div class="flow-grid reveal" style="margin-top:30px">
+          <article class="flow-card">
+            <div class="flow-node"><span class="fn-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="M10.5 18h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><small>Android</small></div>
+            <div class="flow-arrow"><svg viewBox="0 0 80 26" fill="none" preserveAspectRatio="none"><path d="M2 13h66" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 7"/><path d="m62 7 8 6-8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="flow-node"><span class="fn-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><small>Desktop</small></div>
+            <div class="ft"><b>Phone → Desktop</b>Push files from your phone straight to your workstation.</div>
+          </article>
+          <article class="flow-card">
+            <div class="flow-node"><span class="fn-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><small>Desktop</small></div>
+            <div class="flow-arrow"><svg viewBox="0 0 80 26" fill="none" preserveAspectRatio="none"><path d="M2 13h66" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 7"/><path d="m62 7 8 6-8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="flow-node"><span class="fn-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="M10.5 18h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><small>Android</small></div>
+            <div class="ft"><b>Desktop → Phone</b>Drop large files to any phone with a single secure link.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WHY OLOWSHARE ===================== -->
+    <section class="section bg-navy anchor" id="why">
+      <div class="container">
+        <div class="section-head center reveal" style="max-width:680px">
+          <span class="eyebrow center" style="color:#8fb4ff">Why OlowShare</span>
+          <h2>The advantages that add up</h2>
+        </div>
+        <div class="grid grid-3">
+          <article class="feature-card dark reveal">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <h3>Built for speed</h3>
+            <p>Optimized from app launch to the final byte, so you spend less time waiting and more time doing.</p>
+          </article>
+          <article class="feature-card dark reveal d1">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4v5c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V7l8-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Private by default</h3>
+            <p>Encrypted in transit and at rest. We never use the contents of your files for advertising.</p>
+          </article>
+          <article class="feature-card dark reveal d2">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Reliable every time</h3>
+            <p>Transfers resume, links hold, and your files always arrive exactly as they left.</p>
+          </article>
+          <article class="feature-card dark reveal">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>No account to receive</h3>
+            <p>Recipients open a link and download — nothing to install, nothing to sign up for.</p>
+          </article>
+          <article class="feature-card dark reveal d1">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="2"/><rect x="3" y="9" width="5" height="8" rx="1.5" stroke="currentColor" stroke-width="2" opacity=".5"/></svg></div>
+            <h3>Truly cross-platform</h3>
+            <p>One consistent experience across Android and Desktop, with more platforms on the way.</p>
+          </article>
+          <article class="feature-card dark reveal d2">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg></div>
+            <h3>Free to start</h3>
+            <p>Generous free limits cover everyday sharing. Upgrade only if you need more.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7. SCREENSHOTS SHOWCASE ===================== -->
+    <section class="section bg-paper anchor" id="screenshots">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">Screenshots</span>
+          <h2>A look inside the app</h2>
+          <p>Real screens from OlowShare — refined down to the last pixel.</p>
+        </div>
+        <div class="shots-scroll reveal d1">
+          <div class="shot"><div class="scr"><img src="images/screens/hero-home-screen.jpg" alt="OlowShare home screen" loading="lazy" /></div><div class="cap">Home</div></div>
+          <div class="shot"><div class="scr"><img src="images/screens/hero-send-photos.jpg" alt="Selecting photos to send" loading="lazy" /></div><div class="cap">Select &amp; Send</div></div>
+          <div class="shot"><div class="scr"><img src="images/screens/hero-qr-code.jpg" alt="Secure QR code to connect" loading="lazy" /></div><div class="cap">Secure QR Code</div></div>
+          <div class="shot"><div class="scr"><img src="images/screens/hero-scan-screen.jpg" alt="Scan to connect" loading="lazy" /></div><div class="cap">Scan to Connect</div></div>
+          <div class="shot"><div class="scr"><img src="images/screens/hero-connected-screen.jpg" alt="Connection successful" loading="lazy" /></div><div class="cap">Connected</div></div>
+          <div class="shot"><div class="scr"><img src="images/screens/hero-transfer-complete.jpg" alt="Transfer complete" loading="lazy" /></div><div class="cap">Transfer Complete</div></div>
+        </div>
+        <p class="shots-hint">← Scroll to explore more screens →</p>
+      </div>
+    </section>
+
+    <!-- ===================== 8. FAQ ===================== -->
+    <section class="section anchor" id="faq">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">FAQ</span>
+          <h2>Questions, answered</h2>
+        </div>
+        <div class="faq-list reveal d1">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How do I share a file with someone?<span class="faq-ico"></span></button>
+            <div class="faq-a"><div class="faq-a-inner">Open OlowShare, drag in your file or tap browse, and it generates a secure link or QR code instantly. Share it by message, email, or nearby device — your recipient downloads with one tap, no account needed.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Which platforms are supported?<span class="faq-ico"></span></button>
+            <div class="faq-a"><div class="faq-a-inner">OlowShare is available now on Android (8.0+) and Windows (10/11). macOS and Linux apps are on the way, and recipients can download from any modern web browser.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Is there a limit on file size?<span class="faq-ico"></span></button>
+            <div class="faq-a"><div class="faq-a-inner">You can send single files up to 100&nbsp;GB. Transfers are resumable, so even on an unstable connection your upload picks up exactly where it left off.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Are my files secure?<span class="faq-ico"></span></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes. Every transfer is encrypted in transit and at rest. You can add a password and an expiry date to any link, and revoke access at any time from your history.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Is OlowShare free?<span class="faq-ico"></span></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes — the apps are free to download and include everything you need to start sharing. Generous free limits cover most personal use.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. DOWNLOAD ===================== -->
+    <section class="section bg-paper anchor" id="download">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">Download</span>
+          <h2>Get OlowShare on your devices</h2>
+          <p>Free to download, free to start. Pick your platform and be sharing in minutes.</p>
+        </div>
+        <div class="dl-grid">
+          <article class="dl-card featured reveal">
+            <div class="dl-head">
+              <div class="dl-logo"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="2.5" width="12" height="19" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div><h3>OlowShare for Android</h3><span class="dl-plat">Phones &amp; tablets · Google Play</span></div>
+            </div>
+            <div class="dl-meta">
+              <div class="dm"><div class="dl-k">Version</div><div class="dl-v">v3.2.0</div></div>
+              <div class="dm"><div class="dl-k">Size</div><div class="dl-v">38 MB</div></div>
+              <div class="dm"><div class="dl-k">Requires</div><div class="dl-v">Android 8.0+</div></div>
+            </div>
+            <ul class="dl-feats">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Send &amp; receive files up to 100&nbsp;GB</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Nearby share and QR-code transfers</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Full sync with your desktop history</li>
+            </ul>
+            <a href="https://play.google.com/store/apps/details?id=your.app.id" class="btn btn-light btn-lg btn-block" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3.6 2.3 13.4 12 3.6 21.7c-.3-.2-.5-.6-.5-1.1V3.4c0-.5.2-.9.5-1.1Z" fill="#34A853"/><path d="m13.4 12 3-3 3.6 2c.7.4.7 1.6 0 2l-3.6 2-3-3Z" fill="#FBBC04"/><path d="M3.6 2.3c.3-.2.7-.2 1.1 0L16.4 9l-3 3-9.8-9.7Z" fill="#4285F4"/><path d="m13.4 12 3 3L4.7 21.7c-.4.2-.8.2-1.1 0L13.4 12Z" fill="#EA4335"/></svg>
+              Download on Play Store
+            </a>
+            <p class="dl-req">Requires Android 8.0 or later · ARM &amp; ARM64</p>
+          </article>
+
+          <article class="dl-card reveal d1">
+            <div class="dl-head">
+              <div class="dl-logo"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div><h3>OlowShare for Desktop</h3><span class="dl-plat">Windows 10 &amp; 11</span></div>
+            </div>
+            <div class="dl-meta">
+              <div class="dm"><div class="dl-k">Version</div><div class="dl-v">v2.0.1</div></div>
+              <div class="dm"><div class="dl-k">Size</div><div class="dl-v">82 MB</div></div>
+              <div class="dm"><div class="dl-k">Requires</div><div class="dl-v">Win 10/11</div></div>
+            </div>
+            <ul class="dl-feats">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Drag-and-drop transfers from your desktop</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Right-click "Share with OlowShare" in Explorer</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Automatic updates and full mobile sync</li>
+            </ul>
+            <a href="https://yourdomain.com/downloads/app-desktop.exe" class="btn btn-dark btn-lg btn-block">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3 5.7 10.5 4.6V11.4H3V5.7Z" fill="currentColor"/><path d="M11.6 4.4 21 3v8.4h-9.4V4.4Z" fill="currentColor"/><path d="M3 12.6h7.5v6.8L3 18.3v-5.7Z" fill="currentColor"/><path d="M11.6 12.6H21V21l-9.4-1.4v-7Z" fill="currentColor"/></svg>
+              Download for Windows
+            </a>
+            <p class="dl-req">Requires Windows 10 (64-bit) or later · 4&nbsp;GB RAM</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. CONTACT ===================== -->
+    <section class="section anchor" id="contact">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow center">Contact</span>
+          <h2>We'd love to hear from you</h2>
+          <p>Questions, feedback, or partnership ideas — reach the right team and we'll get back fast.</p>
+        </div>
+        <div class="contact-band reveal d1">
+          <div class="contact-tile">
+            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><h4>Support</h4><p>Help with the app or your account.</p><a href="mailto:support@olowshare.io">support@olowshare.io</a></div>
+          </div>
+          <div class="contact-tile">
+            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg></span>
+            <div><h4>Sales &amp; Partnerships</h4><p>Team plans and integrations.</p><a href="mailto:hello@olowshare.io">hello@olowshare.io</a></div>
+          </div>
+          <div class="contact-tile">
+            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><h4>Support Hours</h4><p>Mon–Fri, 9:00–18:00 UTC.</p><a href="#download">Typical reply within 24h</a></div>
+          </div>
+        </div>
+
+        <div class="cta-band reveal" style="margin-top:30px">
+          <h2>Start Sharing Files Today</h2>
+          <p>Join millions who trust OlowShare to move what matters — fast, secure, and beautifully simple.</p>
+          <div class="cta-actions">
+            <a href="https://play.google.com/store/apps/details?id=your.app.id" class="btn btn-light btn-lg" target="_blank" rel="noopener">Download Android App</a>
+            <a href="https://yourdomain.com/downloads/app-desktop.exe" class="btn btn-outline-light btn-lg">Download Desktop App</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a href="#home" class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9 17.5L20 6.5" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>OlowShare</a>
+          <p>Share files faster than ever. OlowShare is the clean, reliable way to send and receive across Android and Desktop.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 3H21l-6.5 7.4L22 21h-6l-4.7-6.1L5.9 21H3l7-8L2.3 3h6.1l4.2 5.6L18.2 3Zm-2.1 16h1.7L7.9 4.8H6.1L16.1 19Z"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05C20.4 8.65 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21H9V9Z"/></svg></a>
+            <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.9.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.9-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.39.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.59.69.48A10 10 0 0 0 12 2Z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col"><h5>Product</h5><ul><li><a href="#features">Features</a></li><li><a href="#how">How It Works</a></li><li><a href="#platforms">Cross-Platform</a></li><li><a href="#download">Download</a></li></ul></div>
+        <div class="footer-col"><h5>Explore</h5><ul><li><a href="#why">Why OlowShare</a></li><li><a href="#screenshots">Screenshots</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        <div class="footer-col"><h5>Legal</h5><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li><li><a href="privacy-policy.html">Cookie Policy</a></li><li><a href="privacy-policy.html">Security</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <small>© <span data-year>2026</span> OlowShare Technologies, Inc. All rights reserved.</small>
+        <div class="fb-links"><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a><a href="#contact">Contact</a></div>
+      </div>
+    </div>
+  </footer>
+  <script>
+/* ==========================================================================
+   Olow — Interactions
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  /* ---- Sticky navbar state ---- */
+  var nav = document.querySelector('.nav');
+  function onScroll() {
+    if (!nav) return;
+    if (window.scrollY > 12) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---- Mobile menu ---- */
+  var toggle = document.querySelector('.nav-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      document.body.classList.toggle('menu-open');
+    });
+    document.querySelectorAll('.mobile-menu a').forEach(function (a) {
+      a.addEventListener('click', function () { document.body.classList.remove('menu-open'); });
+    });
+  }
+
+  /* ---- Scroll reveal ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && revealEls.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---- Animated counters ---- */
+  function animateCount(el) {
+    var target = parseFloat(el.getAttribute('data-target'));
+    var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    var dur = 1700;
+    var start = null;
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var val = target * ease(p);
+      el.textContent = val.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('[data-target]');
+  if ('IntersectionObserver' in window && counters.length) {
+    var co = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { animateCount(e.target); co.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (el) { co.observe(el); });
+  } else {
+    counters.forEach(function (el) { el.textContent = el.getAttribute('data-target'); });
+  }
+
+  /* ---- FAQ accordion ---- */
+  document.querySelectorAll('.faq-q').forEach(function (q) {
+    q.addEventListener('click', function () {
+      var item = q.closest('.faq-item');
+      var ans = item.querySelector('.faq-a');
+      var isOpen = item.classList.contains('open');
+      // optional: close siblings
+      var group = q.closest('.faq-list');
+      if (group) {
+        group.querySelectorAll('.faq-item.open').forEach(function (other) {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.faq-a').style.maxHeight = null;
+            other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+      if (isOpen) {
+        item.classList.remove('open');
+        ans.style.maxHeight = null;
+        q.setAttribute('aria-expanded', 'false');
+      } else {
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        q.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ---- Contact form (demo handling) ---- */
+  var form = document.querySelector('#contact-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var success = document.querySelector('#form-success');
+      if (success) {
+        success.classList.add('show');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      form.reset();
+    });
+  }
+
+  /* ---- Legal TOC scroll-spy ---- */
+  var tocLinks = document.querySelectorAll('.legal-toc a');
+  if (tocLinks.length) {
+    var sections = [];
+    tocLinks.forEach(function (link) {
+      var id = link.getAttribute('href').slice(1);
+      var sec = document.getElementById(id);
+      if (sec) sections.push({ link: link, sec: sec });
+    });
+    window.addEventListener('scroll', function () {
+      var pos = window.scrollY + 140;
+      var current = null;
+      sections.forEach(function (s) { if (s.sec.offsetTop <= pos) current = s; });
+      tocLinks.forEach(function (l) { l.classList.remove('active'); });
+      if (current) current.link.classList.add('active');
+    }, { passive: true });
+  }
+
+  /* ---- Tabs ---- */
+  document.querySelectorAll('.tabs').forEach(function (group) {
+    var btns = group.querySelectorAll('.tab-btn');
+    var panels = group.querySelectorAll('.tab-panel');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.getAttribute('data-tab');
+        btns.forEach(function (b) { b.classList.toggle('active', b === btn); });
+        panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-panel') === target); });
+      });
+    });
+  });
+
+  /* ---- One-page scroll-spy (highlight nav link for section in view) ---- */
+  var spyLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  if (spyLinks.length) {
+    var spyMap = spyLinks
+      .map(function (link) {
+        var sec = document.getElementById(link.getAttribute('href').slice(1));
+        return sec ? { link: link, sec: sec } : null;
+      })
+      .filter(Boolean);
+    var spy = function () {
+      var pos = window.scrollY + (window.innerHeight * 0.32);
+      var active = null;
+      spyMap.forEach(function (s) { if (s.sec.offsetTop <= pos) active = s; });
+      spyLinks.forEach(function (l) { l.classList.remove('current'); });
+      if (active) active.link.classList.add('current');
+    };
+    window.addEventListener('scroll', spy, { passive: true });
+    spy();
+  }
+
+  /* ---- Current year ---- */
+  document.querySelectorAll('[data-year]').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+})();
+
+/* ===== How It Works: tabs + scroll walkthroughs + WebShare ===== */
+(function () {
+  var hiw = document.getElementById('how');
+  if (!hiw) return;
+
+  var refreshers = [];
+
+  /* generic scroll-driven walkthrough for any .hiw-track */
+  function initWalk(track) {
+    var steps = [].slice.call(track.querySelectorAll('.hiw-step'));
+    if (!steps.length) return;
+    var device = track.querySelector('.hiw-device');
+    var imgs = device ? [].slice.call(device.querySelectorAll('img')) : [];
+    var alts = [].slice.call(track.querySelectorAll('.hiw-altdev'));
+    var fin = track.querySelector('.hiw-final');
+    var dots = [].slice.call(track.querySelectorAll('.hiw-dots i'));
+    var stage = track.querySelector('.hiw-stagewrap');
+    var cur = -1;
+    function offset() { return Math.min((stage ? stage.clientWidth : 1000) * 0.22, 320); }
+    function setStep(i) {
+      if (i === cur) return; cur = i;
+      var step = steps[i];
+      var dir = parseFloat(step.getAttribute('data-dir')) || 0;
+      var px = (dir * offset()).toFixed(0) + 'px';
+      var vis = step.getAttribute('data-visual') || 'device';
+      if (stage) stage.classList.toggle('center-step', step.getAttribute('data-side') === 'center');
+      steps.forEach(function (s, n) { s.classList.toggle('on', n === i); });
+      dots.forEach(function (d, n) { d.classList.toggle('on', n === i); });
+      if (device) {
+        var useDev = (vis === 'device');
+        device.classList.toggle('on', useDev);
+        if (useDev) {
+          var a = step.getAttribute('data-img');
+          var ii = (a === null) ? i : parseInt(a, 10);
+          imgs.forEach(function (im, n) { im.classList.toggle('on', n === ii); });
+          device.style.setProperty('--px', px);
+        }
+      }
+      alts.forEach(function (al) {
+        var on = (vis === 'alt' && al.getAttribute('data-step') === String(i));
+        al.classList.toggle('on', on);
+        if (on) al.style.setProperty('--px', px);
+      });
+      if (fin) fin.classList.toggle('on', vis === 'final');
+    }
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        if (track.offsetParent === null) return; /* hidden tab/sub */
+        var rect = track.getBoundingClientRect();
+        var total = track.offsetHeight - window.innerHeight;
+        var scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+        var p = total > 0 ? scrolled / total : 0;
+        var idx = Math.floor(p * steps.length);
+        if (idx > steps.length - 1) idx = steps.length - 1;
+        if (idx < 0) idx = 0;
+        setStep(idx);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { cur = -1; onScroll(); });
+    setStep(0);
+    refreshers.push(function () { cur = -1; onScroll(); });
+  }
+
+  [].slice.call(hiw.querySelectorAll('.hiw-track')).forEach(initWalk);
+  function refreshAll() { refreshers.forEach(function (f) { f(); }); }
+
+  /* main pill tabs */
+  var tabs = [].slice.call(hiw.querySelectorAll('.hiw-tab'));
+  var panels = [].slice.call(hiw.querySelectorAll('.hiw-panel'));
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var k = t.getAttribute('data-hiwtab');
+      tabs.forEach(function (x) { x.classList.toggle('active', x === t); });
+      panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-hiwpanel') === k); });
+      refreshAll();
+    });
+  });
+
+  /* WebShare: auto-populate only empty data-folder subs (e.g. Hotspot) */
+  var WEBSHARE = { hotspot: [], wifi: [] };
+  [].slice.call(hiw.querySelectorAll('.hiw-sub[data-folder]')).forEach(function (sub) {
+    if (sub.children.length) return; /* already has a built walkthrough */
+    var key = sub.getAttribute('data-hiwsub');
+    var folder = sub.getAttribute('data-folder');
+    var list = (WEBSHARE[key] || []).slice().sort();
+    if (list.length) {
+      var html = '<div class="hiw-gallery">';
+      list.forEach(function (f, n) {
+        html += '<div class="gshot"><div class="dev-frame"><div class="dev-screen"><img class="on" src="' + folder + f + '" alt="' + key + ' step ' + (n + 1) + '" loading="lazy"/></div></div></div>';
+      });
+      html += '</div>';
+      sub.innerHTML = html;
+    } else {
+      sub.innerHTML = '<div class="hiw-empty"><div class="ee-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H6a2 2 0 0 0-2 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div><h4>Hotspot Mode walkthrough</h4><p>Screenshots appear here in filename order. Add your images to <code>' + folder + '</code> to populate this walkthrough.</p></div>';
+    }
+  });
+
+  /* sub-tab switching */
+  var subtabs = [].slice.call(hiw.querySelectorAll('.hiw-subtab'));
+  var subs = [].slice.call(hiw.querySelectorAll('.hiw-sub'));
+  subtabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var k = t.getAttribute('data-hiwsub');
+      subtabs.forEach(function (x) { x.classList.toggle('active', x === t); });
+      subs.forEach(function (s) { s.classList.toggle('active', s.getAttribute('data-hiwsub') === k); });
+      refreshAll();
+    });
+  });
+})();
+
+/* ===== Scroll-scrubbed video hero — smooth lerp scrubbing (Apple-style) =====
+   Scroll only updates a TARGET. One rAF loop eases the displayed time toward it
+   and issues a seek only when the previous seek has finished — so seeks never
+   queue up and fight the scroll. All state lives in closure refs, never in
+   framework state, and there is exactly one rAF loop. */
+(function () {
+  var track = document.getElementById('vheroTrack');
+  var video = document.getElementById('vheroVideo');
+  if (!track || !video) return;
+  var text = document.getElementById('vheroText');
+  var cta = document.getElementById('vheroCta');
+  var hint = document.getElementById('vheroHint');
+  var nav = document.getElementById('nav');
+
+  var dur = 0;          /* video duration */
+  var targetT = 0;      /* time the scroll wants */
+  var displayT = 0;     /* eased time actually shown */
+  var maxP = 0;         /* furthest scroll progress reached (text never returns) */
+  var ctaShown = false;
+  var running = false;  /* is the rAF loop active */
+  var EASE = 0.16;      /* lerp factor — higher = snappier, lower = smoother */
+  var SCRUB_END = 0.86; /* video reaches its final frame at 86% scroll, then holds */
+
+  function setDur() { if (video.duration && isFinite(video.duration)) dur = video.duration; }
+  video.addEventListener('loadedmetadata', function () { setDur(); kick(); });
+  video.addEventListener('durationchange', setDur);
+  video.addEventListener('canplay', setDur);
+  /* prime so browsers permit frame-accurate seeking, then idle on frame 0 */
+  video.addEventListener('loadeddata', function () {
+    var pr = video.play();
+    if (pr && pr.then) pr.then(function () { video.pause(); try { video.currentTime = 0; } catch (e) {} }).catch(function () {});
+    else { try { video.pause(); } catch (e) {} }
+    kick();
+  });
+
+  /* one layout read per frame; everything else is cheap style writes */
+  function readScroll() {
+    var rect = track.getBoundingClientRect();
+    var total = track.offsetHeight - window.innerHeight;
+    var scrolled = rect.top < 0 ? -rect.top : 0;
+    if (scrolled > total) scrolled = total;
+    var p = total > 0 ? scrolled / total : 0;
+
+    var vp = Math.min(p / SCRUB_END, 1);
+    targetT = vp * (dur || 0);
+
+    if (p > maxP) maxP = p;
+    var tf = 1 - maxP / 0.16; if (tf < 0) tf = 0; else if (tf > 1) tf = 1;
+    if (text) { text.style.opacity = tf; text.style.transform = 'translateY(' + ((1 - tf) * -26).toFixed(1) + 'px)'; }
+    if (hint) hint.style.opacity = tf;
+
+    var atEnd = vp >= 0.999;
+    if (atEnd !== ctaShown) { ctaShown = atEnd; if (cta) cta.classList.toggle('show', atEnd); }
+    if (nav) nav.classList.toggle('over-hero', p < 1);
+  }
+
+  function frame() {
+    readScroll();
+    displayT += (targetT - displayT) * EASE;
+    var settled = Math.abs(targetT - displayT) < 0.0035;
+    if (settled) displayT = targetT;
+
+    /* seek only when the previous seek is done — prevents queue/stutter */
+    if (dur && !video.seeking) {
+      var t = displayT; if (t < 0) t = 0; else if (t > dur - 0.05) t = dur - 0.05;
+      if (Math.abs((video.currentTime || 0) - t) > 0.01) { try { video.currentTime = t; } catch (e) {} }
+    }
+
+    /* keep running until the eased value AND the video have reached the target */
+    if (settled && Math.abs((video.currentTime || 0) - displayT) < 0.02) { running = false; return; }
+    requestAnimationFrame(frame);
+  }
+
+  function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+
+  /* scroll/resize do almost nothing — they just wake the single loop */
+  window.addEventListener('scroll', kick, { passive: true });
+  window.addEventListener('resize', kick, { passive: true });
+  setDur();
+  kick();
+})();
+
+  </script>
+</body>
+</html>
