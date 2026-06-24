@@ -1274,14 +1274,14 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 .hiw-step h3 { font-size:clamp(1.7rem,2.8vw,2.4rem); margin:12px 0 14px; letter-spacing:-.03em; line-height:1.08; }
 .hiw-step p { font-size:1.06rem; color:var(--slate); line-height:1.5; }
 
-/* progress dots + hint — bigger, and a draggable pill (hold & drag to scrub steps) */
-.hiw-dots { position:absolute; left:50%; bottom:14px; transform:translateX(-50%); display:flex; align-items:center; gap:11px; z-index:4;
-  padding:11px 16px; border-radius:999px; background:rgba(255,255,255,.72); border:1px solid var(--line);
-  box-shadow:var(--sh-xs); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+/* progress dots — a clearly-visible dark control pill; click a dot or drag across to scrub */
+.hiw-dots { position:absolute; left:50%; bottom:26px; transform:translateX(-50%); display:flex; align-items:center; gap:13px; z-index:6;
+  padding:14px 22px; border-radius:999px; background:rgba(15,23,42,.94);
+  box-shadow:0 16px 40px -12px rgba(15,29,61,.55), 0 0 0 1px rgba(255,255,255,.06) inset;
   cursor:grab; touch-action:none; user-select:none; -webkit-user-select:none; }
 .hiw-dots:active { cursor:grabbing; }
-.hiw-dots i { width:11px; height:11px; border-radius:50%; background:var(--line-strong); transition:width .35s var(--ease), background .35s var(--ease); pointer-events:none; }
-.hiw-dots i.on { background:var(--blue); width:34px; border-radius:7px; }
+.hiw-dots i { width:11px; height:11px; border-radius:50%; background:rgba(255,255,255,.42); transition:width .35s var(--ease), background .35s var(--ease); pointer-events:none; }
+.hiw-dots i.on { background:#fff; width:36px; border-radius:7px; }
 .hiw-scrollhint { text-align:center; color:var(--slate-light); font-size:.84rem; padding:16px 28px 0; }
 
 /* WebShare */
@@ -1325,8 +1325,9 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 .hiw-track.wifi { height:760vh; }
 .hiw-device { opacity:0; transition:transform 1s var(--ease), opacity .55s var(--ease), height .7s var(--ease), top .7s var(--ease); }
 .hiw-device.on { opacity:1; }
-/* centered steps (phone above, text below): lift + shrink the phone so the text always has room */
-.hiw-stagewrap.center-step .hiw-device { top:39%; height:min(56vh,460px); }
+/* centered steps (phone above, text below): lift + shrink the phone so the text always has room
+   — sized to fit the shorter pinned area (nav + sticky tabs) without overlapping the text */
+.hiw-stagewrap.center-step .hiw-device { top:24%; height:min(36vh,390px); }
 .hiw-stagewrap.center-step .hiw-step[data-side="center"] { bottom:3%; }
 
 .hiw-altdev { position:absolute; left:50%; top:50%; opacity:0; transform:translate(-50%,-50%) translateX(var(--px,0px)); transition:transform 1s var(--ease), opacity .55s var(--ease); will-change:transform,opacity; }
@@ -1337,8 +1338,8 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
 /* ===== Receiver walkthrough: dual-phone (both devices) steps ===== */
 .hiw-track.receiver { height:640vh; }
 .hiw-track.hotspot { height:840vh; }
-.hiw-altdev.dual { display:flex; align-items:flex-end; justify-content:center; gap:28px; width:auto; height:auto; top:44%; }
-.hiw-altdev.dual .dual-phone { width:min(27vw,206px); text-align:center; }
+.hiw-altdev.dual { display:flex; align-items:flex-end; justify-content:center; gap:28px; width:auto; height:auto; top:24%; }
+.hiw-altdev.dual .dual-phone { width:min(27vw,16vh,200px); text-align:center; }
 .hiw-altdev.dual .dev-frame { width:100%; height:auto; }
 .hiw-altdev.dual .dev-screen { height:auto; aspect-ratio:1080/2340; }
 .hiw-altdev.dual .dev-screen img { object-fit:cover; object-position:top center; }
@@ -2266,25 +2267,28 @@ body.menu-open .mobile-menu { opacity: 1; transform: translateY(0); pointer-even
       var pressing = false, dragging = false, startX = 0;
       var onMove = function (e) {
         if (!pressing) return;
-        if (e.cancelable) e.preventDefault();                 /* stop the page from scrolling mid-drag */
-        if (!dragging && Math.abs(e.clientX - startX) > 4) dragging = true;
-        goToStep(idxFromX(e.clientX), false);                 /* follow the finger / cursor instantly */
+        if (!dragging && Math.abs(e.clientX - startX) > 6) dragging = true;   /* only start once you actually drag */
+        if (!dragging) return;
+        if (e.cancelable) e.preventDefault();                 /* stop the page scrolling while scrubbing */
+        goToStep(idxFromX(e.clientX), false);                 /* follow the finger / cursor */
       };
       var onUp = function (e) {
-        if (!pressing) return; pressing = false; dragging = false;
+        if (!pressing) return; pressing = false;
         var x = (e && e.clientX != null) ? e.clientX : startX;
-        goToStep(idxFromX(x), true);                          /* smooth settle on release */
+        /* a plain tap (no drag) jumps to the tapped dot; a drag has already landed where released */
+        goToStep(idxFromX(x), false);
+        dragging = false;
         window.removeEventListener('pointermove', onMove, { passive: false });
         window.removeEventListener('pointerup', onUp);
         window.removeEventListener('pointercancel', onUp);
         window.removeEventListener('touchmove', blockTouch, { passive: false });
       };
       /* extra guard for older mobile browsers that don't fully honor touch-action */
-      var blockTouch = function (e) { if (pressing && e.cancelable) e.preventDefault(); };
+      var blockTouch = function (e) { if (dragging && e.cancelable) e.preventDefault(); };
       dotsWrap.addEventListener('pointerdown', function (e) {
         pressing = true; dragging = false; startX = e.clientX;
-        goToStep(idxFromX(e.clientX), false);                 /* immediate move — even a plain hold responds */
-        /* listen on window so the drag keeps working even if the finger leaves the small pill */
+        /* NOTE: do NOT navigate on press — that yanked the page when you grabbed the slider.
+           We navigate only on a real tap (release) or once you start dragging. */
         window.addEventListener('pointermove', onMove, { passive: false });
         window.addEventListener('pointerup', onUp);
         window.addEventListener('pointercancel', onUp);
