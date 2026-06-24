@@ -17,12 +17,6 @@ HOW TO DEPLOY
 
 No build step. No dependencies. Just static files — zip the folder, upload, done.
 
-NOTE ON THE HERO VIDEO: the scroll hero streams public/herosection/herosection.mp4 and
-relies on HTTP Range requests (206 responses). Every real host (Netlify, Vercel,
-GitHub Pages, Nginx, Apache, S3/CloudFront, cPanel) supports this out of the box,
-so the scrub is smooth in production. Range support is only ever missing on bare
-"open the file directly" / some toy local servers.
-
 FOLDER STRUCTURE
 ----------------
 hosting/
@@ -34,9 +28,8 @@ hosting/
   assets/
     fonts/inter-*.woff2      Self-hosted Inter font (no Google Fonts needed)
     site.webmanifest         PWA manifest
-  public/                    All site media (every image/video/icon lives here)
-    herosection/
-      herosection.mp4        Scroll-scrubbed hero video
+  public/                    All site media (every image/icon lives here)
+    herosection/             herosection1/2/3.png — the rotating hero banner slides
     how-it-works/            Walkthrough screenshots, by flow:
       send-files/            "Send Files" walkthrough (7 images)
       receiver/              "Receiver" walkthrough (12 images)
@@ -48,7 +41,7 @@ hosting/
       logo.svg               Brand logo (vector)
       favicon.svg            Site favicon (legal pages + PWA)
     images/
-      screens/               Hero phone-showcase strip screenshots (6 images)
+      screens/               Real app screenshots in the "look inside" gallery (5 images)
       og-cover.svg           Social-share / Open Graph cover image
 
 EVERY referenced file is inside this folder — nothing is loaded from outside the
